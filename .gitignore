@@ -1,0 +1,11 @@
+	
+.prettierrc.js
+.vscode/
+.watchmanconfig
+node_modules
+__tests__
+android
+ios
+.idea/
+aspirakey (1).jks
+

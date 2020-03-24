@@ -1,0 +1,94 @@
+[
+	 
+	{
+	  "id": 13,
+	  "categoryName": "Tests",
+	  "description": "Pathological tests determine the cause and nature of diseases by examining and testing body tissues, bodily fluids.",
+	  "icon": "trackercategories/pathology.png",
+	  "isSearchEnabled": 1,
+	  "isTrackerEnabled": 0,
+	  "isDisabled": 0,
+	  "order": 1,
+	  "allCategoriesFlag": 1
+	},
+	{
+		"id": 12,
+		"categoryName": "Packages",
+		"description": "Know more about how can you monitor your overall health. ",
+		"icon": "trackercategories/overallhealth.png",
+		"isSearchEnabled": 1,
+		"isTrackerEnabled": 0,
+		"isDisabled": 0,
+		"order": 0,
+		"allCategoriesFlag": 1
+	  },
+	
+  ]
+
+
+//   {
+// 	"id": 15,
+// 	"categoryName": "Womens Health",
+// 	"description": "These include common tests specifically designed to monitor a woman's health and well being.",
+// 	"icon": "trackercategories/women.png",
+// 	"isSearchEnabled": 1,
+// 	"isTrackerEnabled": 0,
+// 	"isDisabled": 0,
+// 	"order": 3,
+// 	"allCategoriesFlag": 0
+//   },
+//   {
+// 	"id": 9,
+// 	"categoryName": "Heart Care",
+// 	"description": "Heart Care mostly consists of monitoring Lipids, also known as fats, play many important roles in your body, from providing energy to producing hormones. You wouldn't be able to digest and absorb food properly without lipids.",
+// 	"icon": "trackercategories/hearthealth.png",
+// 	"isSearchEnabled": 1,
+// 	"isTrackerEnabled": 1,
+// 	"isDisabled": 0,
+// 	"order": 4,
+// 	"allCategoriesFlag": 0
+//   },
+//   {
+// 	"id": 16,
+// 	"categoryName": "Liver Care",
+// 	"description": "These tests actually measure how well the liver is functioning, also sometimes reflect the presence of damage or inflammation. ",
+// 	"icon": "trackercategories/liver.png",
+// 	"isSearchEnabled": 1,
+// 	"isTrackerEnabled": 0,
+// 	"isDisabled": 0,
+// 	"order": 5,
+// 	"allCategoriesFlag": 0
+//   },
+//   {
+// 	"id": 17,
+// 	"categoryName": "Kidney Care",
+// 	"description": "Simple blood and urine tests that can identify problems with your kidneys",
+// 	"icon": "trackercategories/kidney.png",
+// 	"isSearchEnabled": 1,
+// 	"isTrackerEnabled": 0,
+// 	"isDisabled": 0,
+// 	"order": 6,
+// 	"allCategoriesFlag": 0
+//   },
+//   {
+// 	"id": 10,
+// 	"categoryName": "Diabetes Care",
+// 	"description": "Blood glucose (blood sugar) monitoring is the main tool you have to check your diabetes control.",
+// 	"icon": "trackercategories/diabetes.png",
+// 	"isSearchEnabled": 1,
+// 	"isTrackerEnabled": 1,
+// 	"isDisabled": 0,
+// 	"order": 7,
+// 	"allCategoriesFlag": 0
+//   },
+//   {
+// 	"id": 18,
+// 	"categoryName": "Vitamins",
+// 	"description": "Vitamin deficiency could be one of the factors associated with fatigue, weakness, lethargy and overall health status of a person.",
+// 	"icon": "trackercategories/vitamins.png",
+// 	"isSearchEnabled": 1,
+// 	"isTrackerEnabled": 0,
+// 	"isDisabled": 0,
+// 	"order": 8,
+// 	"allCategoriesFlag": 0
+//   }

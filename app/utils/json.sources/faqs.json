@@ -1,0 +1,70 @@
+[ 
+  {
+  "id":  1,
+  "question": "Are the tests taken recently?",
+  "FAQtype": "Report List",
+  "answer": "Your reports will only be visible on our platform once they are submitted by your respective diagnostic centre.",  "reportingString": "I have recently performed some tests, but I am not able to see reports",
+  "isUserMeta": 1
+}, {
+  "id" :  2,
+  "question": "All tests done together but some not visible",
+  "FAQtype": "Report List",
+  "answer": "Completion time depends on the type of tests performed hence there can be a delay in between submission of different tests.",
+  "reportingString": "I have recently performed some tests, but I am not able to see some of the reports",
+  "isUserMeta": 1
+}, {
+  "id" :  3,
+  "question": "Report belongs to someone else",
+  "FAQtype": "Report List",
+  "answer": "If tests of your family member were registered under your mobile number they will be visible in your list with a tag of the family member`s name.",
+  "reportingString": "Test(s) perfomed are belongs to someone else but showing as my reports",
+  "isUserMeta": 1
+}, {
+  "id" :  4,
+  "question": "Bill amount paid but reports are not visible",
+  "FAQtype": "Report List",
+  "answer": "Your reports can be viwed immediatly once the pending bill amount is paid provided that your reports are ready and submitted by your diagnostic centre.",
+  "reportingString": "I have paid all amount for report(s), but I am unable to see my report",
+  "isUserMeta": 1
+}, {
+  "id" :  5,
+  "question": "Hard copy of reports collected but reports not available on app",
+  "FAQtype": "Report List",
+  "answer": "Your reports will only be visible on our platform once they are submitted by your respective diagnostic centre.", "reportingString": "I have collected hard copy of report(s), but I am unable to see them on app",
+  "isUserMeta": 1
+}, {
+  "id" :  6,
+  "question": "Reports are ready but not visible",
+  "FAQtype": "Report List",
+  "answer": "",
+  "reportingString": "I have received an SMS that my report(s) are ready, but I am unable to see them",
+  "isUserMeta": 1
+}, {
+  "id" :  7,
+  "question": "I have paid for my reports but it still shows bill pending.",
+  "FAQtype": "Report List",
+  "answer": "",
+  "reportingString": "I have paid all amount for report(s), but bill is still showing due",
+  "isUserMeta": 1
+}, {
+  "id" :  8,
+  "question": "Unable to download PDF",
+  "FAQtype": "Report View",
+  "answer": "",
+  "reportingString": "I am not able to download report PDF",
+  "isUserMeta": 0
+}, {
+  "id" :  9,
+  "question": "Name displayed is wrong",
+  "FAQtype": "Report View",
+  "answer": "",
+  "reportingString": "Name displayed on report is wrong",
+  "isUserMeta": 0
+}, {
+  "id" : 10,
+  "question": "Report is blank",
+  "FAQtype": "Report View",
+  "answer": "",
+  "reportingString": "I am not able to see report, it is showing blank.",
+  "isUserMeta": 0
+}]
