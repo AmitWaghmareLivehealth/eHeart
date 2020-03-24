@@ -328,6 +328,6 @@ export const stringRazorPay = {
 };
 
 export const stringsAppId = {
-  androidId: "com.livehealth.aspira1",
+  androidId: "com.livehealth.eheart",
   iosId: "livehealth/id1078847801"
 };
