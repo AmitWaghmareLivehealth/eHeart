@@ -110,19 +110,6 @@ export default class ReportView extends Component {
     this.onScroll = this.onScroll.bind(this);
     this._renderAnimatedCloseBar = this._renderAnimatedCloseBar.bind(this);
 
-    this._handleStartShouldSetPanResponder = this._handleStartShouldSetPanResponder.bind(
-      this,
-    );
-    this._handleMoveShouldSetPanResponder = this._handleMoveShouldSetPanResponder.bind(
-      this,
-    );
-    this._handlePanResponderGrant = this._handlePanResponderGrant.bind(this);
-    this._handlePanResponderMove = this._handlePanResponderMove.bind(this);
-    this._handlePanResponderEnd = this._handlePanResponderEnd.bind(this);
-    this._handlePanResponderStart = this._handlePanResponderStart.bind(this);
-    this._handlePanResponderRelease = this._handlePanResponderRelease.bind(
-      this,
-    );
     this.downloadFileType = this.downloadFileType.bind(this);
     this.gotoTrackers = this.gotoTrackers.bind(this);
     // this.populateGraphData = this.populateGraphData.bind(this)
@@ -1456,137 +1443,9 @@ export default class ReportView extends Component {
       );
     }
   }
+  
 
-  _panResponder: {};
-  _previousLeft: 0;
-  _previousTop: 0;
-
-  componentWillMount() {
-    this._panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: this._handleStartShouldSetPanResponder,
-      onMoveShouldSetPanResponder: this._handleMoveShouldSetPanResponder,
-      onPanResponderGrant: this._handlePanResponderGrant,
-      onPanResponderMove: this._handlePanResponderMove,
-      onPanResponderRelease: this._handlePanResponderRelease,
-      onPanResponderTerminate: this._handlePanResponderEnd,
-      onPanResponderStart: this._handlePanResponderStart,
-    });
-    this._previousLeft = 20;
-    this._previousTop = 84;
-    this._circleStyles = {
-      style: {
-        left: this._previousLeft,
-        top: this._previousTop,
-      },
-    };
-  }
-
-  onScroll(event) {
-    if (event.nativeEvent.contentOffset.y < 5) {
-      // this.props.setSwipe(true)
-      // this.props.setSwipeArea(true)
-      console.log('set swipe TRUE onScroll');
-      this.props.setSwipe(true);
-      // this.setState({
-      //   panResponse: true
-      // })
-    }
-    // else {
-    //   // this.props.setSwipe(false)
-    //   if(this.props.getSwipeArea === Global.screenHeight){
-    //     // this.props.setSwipeArea(false)
-    //     console.log('set swipe FALSE onScroll');
-    //   }
-    // }
-    this.setState({animatedScrollOffsetY: event.nativeEvent.contentOffset.y});
-    // console.log('Current offset y', event.nativeEvent.contentOffset.y);
-  }
-
-  _handleStartShouldSetPanResponder(e: Object, gestureState: Object): boolean {
-    // Should we become active when the user presses down on the circle?
-    console.log('PAN SHOULD START', gestureState);
-    //  if(this.props.getSwipe === 1){
-    //    return false;
-    //  } else {
-    if (this.state.animatedScrollOffsetY === 0) {
-      return this.state.panResponse;
-    } else {
-      return false;
-    }
-    //  }
-  }
-
-  _handleMoveShouldSetPanResponder(e: Object, gestureState: Object): boolean {
-    // Should we become active when the user moves a touch over the circle?
-    console.log('PAN SHOULD MOVE');
-    return true;
-  }
-
-  _handlePanResponderStart(e: Object, gestureState: Object): boolean {
-    return true;
-  }
-
-  _handlePanResponderGrant(e: Object, gestureState: Object) {
-    console.log('PAN GESTURE RECEIVED', e, gestureState);
-    //  this.setState({
-    //    scroll: true
-    //  })
-    return true;
-  }
-
-  _handlePanResponderMove(e: Object, gestureState: Object) {
-    //  this.scrollControl = Math.abs(gestureState.dy);
-    //
-    //  let shiftValue = -gestureState.dy / PixelRatio.get();
-    //  currentMove = shiftValue < 0 ? currentMove - Math.abs(shiftValue) : currentMove + Math.abs(shiftValue)
-    //  console.log('shiftVal', currentMove)
-    //  this.refs.scrollView.scrollTo({x: gestureState.dx, y: currentMove, animated: true});
-
-    console.log('PAN MOVE', {
-      x: gestureState.dx,
-      y: currentMove,
-      animated: true,
-    });
-    if (gestureState.dy < 1 && this.state.animatedScrollOffsetY === 0) {
-      console.log('PAN MOVE change: false', 'SWIPE UP');
-      // SWIPE UP
-      //  this.props.setSwipe(false)
-      this.setState({
-        panResponse: false,
-      });
-      // this.props.setSwipeArea(false)
-      this.props.setSwipeArea(false);
-    }
-
-    if (gestureState.dy > 1 && this.state.animatedScrollOffsetY === 0) {
-      console.log('PAN MOVE change: true', 'SWIPE DOWN');
-      // SWIPE DOWN
-      this.setState({
-        panResponse: true,
-      });
-      //  this.props.setSwipe(true)
-      this.props.setSwipeArea(true);
-    }
-
-    return true;
-  }
-  _handlePanResponderEnd(e: Object, gestureState: Object) {
-    //  console.log('changedTouches', e.changedTouches() , gestureState);
-    // if(animatedScrollOffsetY){
-    //   this.props.setSwipe(false)
-    // }
-    console.log('PAN GESTURE ENDED', e, gestureState);
-    return true;
-  }
-
-  _handlePanResponderRelease(e: Object, gestureState: Object) {
-    console.log('PAN GESTURE ENDED', e, gestureState);
-    //  this.setState({
-    //    scroll: false
-    //  })
-    this.scrollControl = Math.abs(gestureState.dy);
-    return true;
-  }
+  onScroll(event) {}
 
   render() {
     return (
@@ -1621,18 +1480,6 @@ export default class ReportView extends Component {
             }}
             renderHeader={this._renderReportHeader}
             onScroll={this.onScroll}
-            onContentSizeChange={(w, h) => {
-              if (h > Global.screenHeight) {
-                if (this.props.getSwipe()) {
-                  this.props.setSwipe(false);
-                  this.setState({
-                    isVisible: true,
-                  });
-                  this.props.setScroll(true);
-                  this.refs.scrollView.scrollTo({x: 0, y: 5, animated: true});
-                }
-              }
-            }}
           />
         )}
 

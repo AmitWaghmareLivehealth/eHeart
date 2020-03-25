@@ -1,5 +1,5 @@
 {
-  "name": "Aspira",
+  "name": "eheart",
   "version": "4.0.0",
   "private": true,
   "scripts": {
@@ -7,9 +7,10 @@
     "test": "jest",
     "android-dev": "adb reverse tcp:8081 tcp:8081 && react-native run-android",
     "android": "react-native run-android",
-    "android-v":"react-native run-android --variant=release"
+    "android-v": "react-native run-android --variant=release"
   },
   "dependencies": {
+    "@dudigital/react-native-zoomable-view": "^1.0.15",
     "@react-native-community/geolocation": "^1.4.2",
     "@react-native-community/netinfo": "^4.6.1",
     "@sentry/react-native": "^1.1.0",
@@ -32,6 +33,7 @@
     "react-native-fetch-blob": "^0.10.6",
     "react-native-geocoder": "^0.4.8",
     "react-native-geolocation-service": "^3.0.0",
+    "react-native-gesture-handler": "^1.6.1",
     "react-native-get-real-path": "git+https://github.com/Wraptime/react-native-get-real-path.git",
     "react-native-google-places": "^2.4.2",
     "react-native-htmlview": "^0.9.0",
@@ -39,6 +41,8 @@
     "react-native-intercom": "^13.2.0",
     "react-native-linear-gradient": "^2.0.0",
     "react-native-optimized-flatlist": "^1.0.4",
+    "react-native-pinch-zoom-image": "0.0.10",
+    "react-native-pinch-zoom-view": "^0.2.0",
     "react-native-razorpay": "^2.1.31",
     "react-native-simple-radio-button": "^2.5.0-alpha.1",
     "react-native-vector-icons": "^4.2.0",
