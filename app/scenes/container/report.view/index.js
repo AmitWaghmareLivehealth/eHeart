@@ -14,6 +14,7 @@ import {
   Share,
   PanResponder,
   PixelRatio,
+  Modal,
 } from 'react-native';
 import {connect} from 'react-redux';
 import {LineChart} from 'react-native-charts-wrapper';
@@ -55,6 +56,8 @@ import {NavigationActions} from 'react-navigation';
 import ListView from 'deprecated-react-native-listview';
 import styles from './styles';
 import ImageScrollView from './ImageScrollView';
+import PinchZoomView from 'react-native-pinch-zoom-view';
+import ZoomImageView from './ZoomImageView';
 
 const ds = new ListView.DataSource({
   rowHasChanged: (r1, r2) => r1 !== r2,
@@ -69,6 +72,7 @@ export default class ReportView extends Component {
     super(props);
     this.state = {
       list: new Array(),
+      selectedImage: null,
       dataSource: ds.cloneWithRowsAndSections([]),
       reportObj: {},
       isLoading: true,
@@ -1145,7 +1149,12 @@ export default class ReportView extends Component {
     return cat === 'lastSection' ? (
       <View style={{backgroundColor: Color._EEGrayTableHeader, height: 16}} />
     ) : cat === 'headerSection' ? (
-      <ImageScrollView images={this.state.attachments} />
+      <ImageScrollView
+        images={this.state.attachments}
+        onImageSelect={selectedImage =>
+          this.setState({selectedImage: selectedImage})
+        }
+      />
     ) : (
       <View></View>
     );
@@ -1443,30 +1452,27 @@ export default class ReportView extends Component {
       );
     }
   }
-  
 
   onScroll(event) {}
 
   render() {
+    const {selectedImage} = this.state;
     return (
       <View
         style={{
           flex: 1,
           backgroundColor: 'white',
           height: this.state.scrollContentHeight,
-        }}
-        // onLayout={(event) => this.measureView(event)}
-        onContentSizeChange={(w, h) => {
-          var height = Global.screenHeight;
-          if (h > Global.screenHeight) {
-            height = hF;
-          }
-          this.setState({scrollContentHeight: height});
-        }}
-        // {...this._panResponder.panHandlers}
-      >
+        }}>
         {/*<Pdf />*/}
-
+        {selectedImage && (
+          <Modal>
+            <ZoomImageView
+              onClose={() => this.setState({selectedImage: null})}
+              image={selectedImage}
+            />
+          </Modal>
+        )}
         {this.state.isReportLoaded && (
           <ListView
             bounces={false}
