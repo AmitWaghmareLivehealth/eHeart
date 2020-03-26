@@ -1,54 +1,15 @@
-// import React, {Component} from 'react';
-// import {View, Image, Animated, Text} from 'react-native';
-// import Global from '../../../utils/const/globals';
-// import PinchZoomView from 'react-native-pinch-zoom-view';
-// import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-
-// export default class ZoomImageView extends Component {
-//   pinZoomLayoutRef = React.createRef();
-//   render() {
-//     const {image} = this.props;
-//     return (
-//       <View
-//         style={{
-//           flex: 1,
-//           position: 'absolute',
-//           width: Global.screenWidth,
-//           backgroundColor: 'white',
-//           height: Global.screenHeight,
-//         }}>
-//         <View>
-//         <MaterialIcons.Button
-//             name={ 'close'}
-//             size={30}
-//             color='black'
-//             style={{ padding: 5 }}
-//             onPress={this.props.onClose}
-//             underlayColor='transparent'
-//             backgroundColor='transparent'
-//           />
-//         </View>
-//         <PinchZoomView>
-// <Image
-//   style={{
-//     width: Global.screenWidth - 20,
-//     height: Global.screenHeight / 2,
-//     marginTop: '40%',
-//     marginLeft: 10,
-//   }}
-//   source={{uri: image.url}}
-// />
-//         </PinchZoomView>
-//       </View>
-//     );
-//   }
-// }
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {View, StyleSheet, PanResponder, ViewPropTypes,Image} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  PanResponder,
+  ViewPropTypes,
+  Image,
+} from 'react-native';
 import Global from '../../../utils/const/globals';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-// Fallback when RN version is < 0.44
 const viewPropTypes = ViewPropTypes || View.propTypes;
 
 export default class PinchZoomView extends Component {
@@ -95,18 +56,11 @@ export default class PinchZoomView extends Component {
   }
 
   _handleStartShouldSetPanResponder = (e, gestureState) => {
-    // don't respond to single touch to avoid shielding click on child components
     return false;
   };
 
   _handleMoveShouldSetPanResponder = (e, gestureState) => {
-    return true
-    // (
-    //   this.props.scalable &&
-    //   (Math.abs(gestureState.dx) > 2 ||
-    //     Math.abs(gestureState.dy) > 2 ||
-    //     gestureState.numberActiveTouches === 2)
-    // );
+    return true;
   };
 
   _handlePanResponderGrant = (e, gestureState) => {
@@ -160,32 +114,42 @@ export default class PinchZoomView extends Component {
   };
 
   render() {
-    const {image}=this.props
+    const {image} = this.props;
     return (
-      <View
-        {...this.gestureHandlers.panHandlers}
-        style={[
-          styles.container,
-          this.props.style,
-          {
-            transform: [
-              {scaleX: this.state.scale},
-              {scaleY: this.state.scale},
-              {translateX: this.state.offsetX},
-              {translateY: this.state.offsetY},
-            ],
-          },
-        ]}>
-        <Image
-          style={{
-            width: Global.screenWidth - 20,
-            height: Global.screenHeight / 2,
-            marginTop: '40%',
-            marginLeft: 10,
-          }}
-          source={{uri: image.url}}
+      <>
+        <MaterialIcons.Button
+          name={'close'}
+          size={30}
+          color="black"
+          onPress={this.props.onClose}
+          underlayColor="transparent"
+          backgroundColor="transparent"
         />
-      </View>
+        <View
+          {...this.gestureHandlers.panHandlers}
+          style={[
+            styles.container,
+            this.props.style,
+            {
+              transform: [
+                {scaleX: this.state.scale},
+                {scaleY: this.state.scale},
+                {translateX: this.state.offsetX},
+                {translateY: this.state.offsetY},
+              ],
+            },
+          ]}>
+          <Image
+            style={{
+              width: Global.screenWidth - 20,
+              height: Global.screenHeight / 2,
+              marginTop: '40%',
+              marginLeft: 10,
+            }}
+            source={{uri: image.url}}
+          />
+        </View>
+      </>
     );
   }
 }
