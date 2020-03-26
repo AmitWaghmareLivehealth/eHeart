@@ -34,23 +34,14 @@ const Global = {
     !Platform.isPad &&
     !Platform.isTVOS &&
     (dimen.height === 812 || dimen.width === 812),
-   aboutUs: `AspiraHealth is an exclusive app that’s specifically built to track your diagnostic tests at Aspira Pathlabs easier. It’s an exclusive app that was built with the intention to provide mobile tracking of diagnostic tests. This makes the process for our customers, hassle free.
-
-    (AspiraHealth is a product of Aspira Pathlab and Diagnostics which is an inventive venture in quality healthcare and the pioneer in comprehensive reliance on technological automation. For our partner app, check AspiraDr)
-    
-    AspiraHealth is designed to track, save and share your diagnostic reports at our pathlabs.
-    
-    Having to visit pathlabs with the impending anxiety of the test results can be very stressful and time consuming. So, don’t visit us. We’ll bring you your test results ON YOUR PHONE. AspiraHealth is designed for exactly that.
-    
-    Here’s How
-    Find an Aspira registered healthcare provider/lab near you : SEARCH SIMPLER
-    Book an appointment for Home/Lab visits : HASSLE FREE BOOKINGS
-    Check status of appointments : REAL TIME APPROVALS DIRECTLY FROM LAB CENTRES
-    Track your tests and reports right on your phone : TRACK RESULTS
-    Understand your reports with our indicators : INTERPRET RESULTS BETTER
-    Track health with automated archives : DOWNLOAD/SAVE/SHARE ARCHIVED REPORTS
-    
-    If you’ve not tried Aspira yet, and just need a regular health tracking system, just enter your diagnostic test results manually and we’ll keep track of your health.`,
+   aboutUs: `Rana Diagnostics is a popular location in Amritsar for more than twenty five years. 
+   
+   Dr. Amrita Rana is an acknowledged authority in Sonolography & Foetal medicine.
+   
+   Dr.  Parminder Singh Rana has been renowned in the field of Echocardiography especially in Dobutamine Stress echo.
+   
+   eHeart Doorstep Diagnosis is an innovative use of medical technology along with information & software system for segregation of normal population from one with abnormal findings for saving precious lives by timely coordination of trained paramedics in remote & rural areas with centralized experts . 
+   `,
 };
 
 export default Global;

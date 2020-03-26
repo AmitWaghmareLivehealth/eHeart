@@ -1213,9 +1213,10 @@ class Profile extends Component {
           backdrop={true}
           visible={this.state.modal_visible}
           onRequestClose={() => {
-            this.setState({
-              modal_visible: false,
-            });
+            // this.setState({
+            //   modal_visible: false,
+            // });
+            this.closeModal()
           }}>
           {this.state.modal_visible_1 ? (
             <ModalBox

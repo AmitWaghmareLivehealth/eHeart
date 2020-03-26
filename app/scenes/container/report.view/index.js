@@ -1466,7 +1466,7 @@ export default class ReportView extends Component {
         }}>
         {/*<Pdf />*/}
         {selectedImage && (
-          <Modal>
+          <Modal onRequestClose={() => this.setState({selectedImage: null})}>
             <ZoomImageView
               onClose={() => this.setState({selectedImage: null})}
               image={selectedImage}
