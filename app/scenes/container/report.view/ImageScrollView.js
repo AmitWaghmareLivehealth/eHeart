@@ -8,7 +8,7 @@ export default class ImageScrollView extends Component {
     const {images, onImageSelect} = this.props;
 
     return (
-      <ScrollView horizontal={true} style={{flex: 1,marginVertical:20}}>
+      <ScrollView horizontal={true} style={{flex: 1, marginVertical: 20}}>
         {images.map(image => {
           if (!image || !image.url) {
             return (
@@ -23,7 +23,11 @@ export default class ImageScrollView extends Component {
               onPress={() => {
                 if (!isPDF) {
                   onImageSelect(image);
+                  return
                 }
+                Linking.openURL(image.url).catch(err =>
+                  console.error('An error occurred', err),
+                );
               }}>
               <Image
                 source={
