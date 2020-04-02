@@ -23,7 +23,7 @@ export default class PinchZoomView extends Component {
   static defaultProps = {
     scalable: true,
     minScale: 0.5,
-    maxScale: 2,
+    maxScale: 3,
   };
 
   constructor(props) {
@@ -142,7 +142,7 @@ export default class PinchZoomView extends Component {
           <Image
             style={{
               width: Global.screenWidth - 20,
-              height: Global.screenHeight / 2,
+              height: Global.screenHeight -20,
               marginTop: '40%',
               marginLeft: 10,
             }}
