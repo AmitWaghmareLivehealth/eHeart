@@ -6,6 +6,7 @@ import {
   PanResponder,
   ViewPropTypes,
   Image,
+  Text,
 } from 'react-native';
 import Global from '../../../utils/const/globals';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -115,16 +116,20 @@ export default class PinchZoomView extends Component {
 
   render() {
     const {image} = this.props;
+    console.log(image);
     return (
       <>
-        <MaterialIcons.Button
-          name={'close'}
-          size={30}
-          color="black"
-          onPress={this.props.onClose}
-          underlayColor="transparent"
-          backgroundColor="transparent"
-        />
+        <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+          <MaterialIcons.Button
+            name={'close'}
+            size={30}
+            color="black"
+            onPress={this.props.onClose}
+            underlayColor="transparent"
+            backgroundColor="transparent"
+          />
+          <Text>{image.name}</Text>
+        </View>
         <View
           {...this.gestureHandlers.panHandlers}
           style={[
@@ -142,7 +147,7 @@ export default class PinchZoomView extends Component {
           <Image
             style={{
               width: Global.screenWidth - 20,
-              height: Global.screenHeight -20,
+              height: Global.screenHeight - 20,
               marginTop: '40%',
               marginLeft: 10,
             }}
