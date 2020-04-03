@@ -5,16 +5,16 @@ const deviceWidth = Dimensions.get('window').width;
 const dimen = Dimensions.get('window');
 
 const Global = {
-  labId: 25,
+  labId: 1614,
   // labId: 1837,
-  labName:'Aspira Diagnostics',
+  labName:'Rana Diagnostics',
   // labId: 1614,
   screenWidth: deviceWidth,
   screenHeight: deviceHeight,
   iOSPlatform: Platform.OS === 'ios',
   osVersion: Platform.Version > 22,
-  // developerId: 'c4a03b1a-676a-11ea-bc55-0242ac130003',
-  developerId: 1,
+  developerId: 'c4a03b1a-676a-11ea-bc55-0242ac130003',
+//   developerId: 1,
 
   currencySymbol: '\u20B9',
   LTHDateFormat: "yyyy-MM-dd'T'HH:mm:ss'Z'",
