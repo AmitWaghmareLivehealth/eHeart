@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Text, ScrollView, Image, TouchableOpacity, Linking} from 'react-native';
 import Global from '../../../utils/const/globals';
 import {View} from 'native-base';
+import ImageCard from './ImageCard';
 
 export default class ImageScrollView extends Component {
   render() {
@@ -29,19 +30,7 @@ export default class ImageScrollView extends Component {
                   console.error('An error occurred', err),
                 );
               }}>
-              <Image
-                source={
-                  isPDF
-                    ? require('../../../assets/common/pdf.png')
-                    : {uri: image.url}
-                }
-                style={{
-                  height: 200,
-                  width: Global.screenWidth - 120,
-                  marginLeft: 10,
-                  flex: 1,
-                }}
-              />
+               <ImageCard image={image} isPDF={isPDF}/>
             </TouchableOpacity>
           );
         })}

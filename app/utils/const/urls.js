@@ -1,8 +1,8 @@
 import Global from "./globals";
 // const baseURL = "http://192.168.43.50:9000/"
-const baseURL = "https://livehealth.in/"; // ******* Live Production ********
+// const baseURL = "https://livehealth.in/"; // ******* Live Production ********
 // const baseURL = 'https://app.livehealth.in/'
-// const baseURL = "https://beta.livehealth.in/"; // ******* Beta Testing ********
+const baseURL = "https://beta.livehealth.in/"; // ******* Beta Testing ********
 // const baseURL = 'http://35.154.77.194/' // ******* Live Production ********
 
 // const baseURL = "http://192.168.2.202:8001/"; // ******* Local Testing *******

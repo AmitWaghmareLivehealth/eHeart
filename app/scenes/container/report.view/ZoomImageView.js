@@ -11,6 +11,7 @@ import {
 import Global from '../../../utils/const/globals';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
+import {Card, CardItem, Body, Right} from 'native-base';
 const viewPropTypes = ViewPropTypes || View.propTypes;
 
 export default class PinchZoomView extends Component {
@@ -48,8 +49,8 @@ export default class PinchZoomView extends Component {
       onPanResponderGrant: this._handlePanResponderGrant,
       onPanResponderMove: this._handlePanResponderMove,
       onPanResponderRelease: this._handlePanResponderEnd,
-      onPanResponderTerminationRequest: evt => false,
-      onShouldBlockNativeResponder: evt => false,
+      onPanResponderTerminationRequest: (evt) => false,
+      onShouldBlockNativeResponder: (evt) => false,
       onStartShouldSetPanResponder: (evt, gestureState) => true,
       onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
@@ -119,17 +120,34 @@ export default class PinchZoomView extends Component {
     console.log(image);
     return (
       <>
-        <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
-          <MaterialIcons.Button
-            name={'close'}
-            size={30}
-            color="black"
-            onPress={this.props.onClose}
-            underlayColor="transparent"
-            backgroundColor="transparent"
-          />
-          <Text>{image.name}</Text>
-        </View>
+        <Card>
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <MaterialIcons.Button
+              name={'close'}
+              size={30}
+              color="black"
+              onPress={this.props.onClose}
+              underlayColor="transparent"
+              backgroundColor="transparent"
+            />
+            <Text>{image.name}</Text>
+            <Right>
+              <MaterialIcons.Button
+                name={'file-download'}
+                size={30}
+                color="black"
+                onPress={()=>{}}
+                underlayColor="transparent"
+                backgroundColor="transparent"
+              />
+            </Right>
+          </View>
+        </Card>
         <View
           {...this.gestureHandlers.panHandlers}
           style={[
@@ -146,10 +164,9 @@ export default class PinchZoomView extends Component {
           ]}>
           <Image
             style={{
-              width: Global.screenWidth - 20,
-              height: Global.screenHeight - 20,
-              marginTop: '40%',
-              marginLeft: 10,
+              height: 200,
+              width: Global.screenWidth - 120,
+              marginLeft: '20%',
             }}
             source={{uri: image.url}}
           />
@@ -161,6 +178,6 @@ export default class PinchZoomView extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    marginTop: '50%',
   },
 });
