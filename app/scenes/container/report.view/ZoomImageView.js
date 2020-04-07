@@ -7,6 +7,7 @@ import {
   ViewPropTypes,
   Image,
   Text,
+  Linking,
 } from 'react-native';
 import Global from '../../../utils/const/globals';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -115,6 +116,11 @@ export default class PinchZoomView extends Component {
     }
   };
 
+  onDownload=(image)=>{
+    Linking.openURL(image.url).catch(err =>
+      console.error('An error occurred', err),
+    );
+  }
   render() {
     const {image} = this.props;
     console.log(image);
@@ -141,7 +147,7 @@ export default class PinchZoomView extends Component {
                 name={'file-download'}
                 size={30}
                 color="black"
-                onPress={()=>{}}
+                onPress={()=>{this.onDownload(image)}}
                 underlayColor="transparent"
                 backgroundColor="transparent"
               />
