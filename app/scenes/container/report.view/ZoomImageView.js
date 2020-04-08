@@ -1,54 +1,59 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import {View, Image, Text, Dimensions, Alert} from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {Card, Right} from 'native-base';
+import {Card, Right, Spinner, CardItem, Icon} from 'native-base';
 import ImageZoom from 'react-native-image-pan-zoom';
+
 import {
   request_storage_runtime_permission,
   downloadImageFromURL,
 } from './utils';
 
 export default class PinchZoomView extends Component {
+  state = {downloading: false};
   onDownload = async (image) => {
-    await request_storage_runtime_permission();
-    downloadImageFromURL(image);
+    try {
+      this.setState({downloading: true});
+      await request_storage_runtime_permission();
+      await downloadImageFromURL(image);
+      this.setState({downloading: false});
+    } catch (err) {
+      this.setState({downloading: false});
+    }
   };
 
   render() {
     const {image} = this.props;
-    console.log(image);
+    const {downloading} = this.state;
+
     return (
       <>
         <Card>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            <MaterialIcons.Button
-              name={'close'}
-              size={30}
-              color="black"
-              onPress={this.props.onClose}
-              underlayColor="transparent"
-              backgroundColor="transparent"
-            />
-            <Text>{image.name}</Text>
-            <Right>
-              <MaterialIcons.Button
-                name={'file-download'}
-                size={30}
-                color="black"
-                onPress={() => {
-                  this.onDownload(image);
-                }}
-                underlayColor="transparent"
-                backgroundColor="transparent"
-              />
-            </Right>
-          </View>
+           
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                maxHeight:50,
+                padding:10
+              }}>
+              <Icon name="close"   onPress={this.props.onClose} />
+
+              <Text  style={{marginLeft:10}}>{image.name}</Text>
+              <Right >
+                {downloading ? (
+                  <Spinner color="black" size='large' />
+                ) : (
+                  <Icon
+                     name="download"
+                    onPress={() => {
+                      this.onDownload(image);
+                    }}
+                  />
+                )}
+              </Right>
+            </View>
+          
         </Card>
         <ImageZoom
           cropWidth={Dimensions.get('window').width}

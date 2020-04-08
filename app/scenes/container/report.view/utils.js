@@ -20,33 +20,37 @@ export async function request_storage_runtime_permission() {
 }
 
 export const downloadImageFromURL = (image) => {
-  const date = new Date();
-  const image_URL = image.url;
-  let ext = getExtention(image_URL);
-  ext = '.' + ext[0];
-  const {config, fs} = RNFetchBlob;
-  let PictureDir = fs.dirs.PictureDir;
-  let options = {
-    fileCache: true,
-    addAndroidDownloads: {
-      useDownloadManager: true,
-      notification: true,
-      path:
-        PictureDir +
-        '/image_' +
-        Math.floor(date.getTime() + date.getSeconds() / 2) +
-        ext,
-      description: 'Image',
-    },
-  };
-  config(options)
-    .fetch('GET', image_URL)
-    .then((res) => {
-      Alert.alert('Image Downloaded Successfully.');
-    })
-    .catch(() => {
-      Alert.alert('Image Not Downloaded Successfully.');
-    });
+  return new Promise((resolve, reject) => {
+    const date = new Date();
+    const image_URL = image.url;
+    let ext = getExtention(image_URL);
+    ext = '.' + ext[0];
+    const {config, fs} = RNFetchBlob;
+    let PictureDir = fs.dirs.PictureDir;
+    let options = {
+      fileCache: true,
+      addAndroidDownloads: {
+        useDownloadManager: true,
+        notification: true,
+        path:
+          PictureDir +
+          '/image_' +
+          Math.floor(date.getTime() + date.getSeconds() / 2) +
+          ext,
+        description: 'Image',
+      },
+    };
+    config(options)
+      .fetch('GET', image_URL)
+      .then((res) => {
+        Alert.alert('Image Downloaded Successfully.');
+        resolve(res);
+      })
+      .catch((err) => {
+        Alert.alert('Image Not Downloaded Successfully.');
+        reject(err);
+      });
+  });
 };
 
 getExtention = (filename) => {
