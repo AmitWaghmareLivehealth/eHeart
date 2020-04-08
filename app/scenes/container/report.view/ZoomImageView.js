@@ -1,55 +1,20 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {
-  View,
-  StyleSheet,
-  PanResponder,
-  ViewPropTypes,
-  Image,
-  Text,
-  Linking,
-  Dimensions,
-} from 'react-native';
-import Global from '../../../utils/const/globals';
+import {View, Image, Text, Dimensions, Alert} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {Card, CardItem, Body, Right} from 'native-base';
+import {Card, Right} from 'native-base';
 import ImageZoom from 'react-native-image-pan-zoom';
-
-const viewPropTypes = ViewPropTypes || View.propTypes;
+import {
+  request_storage_runtime_permission,
+  downloadImageFromURL,
+} from './utils';
 
 export default class PinchZoomView extends Component {
-  static propTypes = {
-    ...viewPropTypes,
-    scalable: PropTypes.bool,
-    minScale: PropTypes.number,
-    maxScale: PropTypes.number,
+  onDownload = async (image) => {
+    await request_storage_runtime_permission();
+    downloadImageFromURL(image);
   };
 
-  static defaultProps = {
-    scalable: true,
-    minScale: 0.5,
-    maxScale: 3,
-  };
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      scale: 1,
-      lastScale: 1,
-      offsetX: 0,
-      offsetY: 0,
-      lastX: 0,
-      lastY: 0,
-      lastMovePinch: false,
-    };
-    this.distant = 150;
-  }
-
-  onDownload = (image) => {
-    Linking.openURL(image.url).catch((err) =>
-      console.error('An error occurred', err),
-    );
-  };
   render() {
     const {image} = this.props;
     console.log(image);
@@ -101,4 +66,3 @@ export default class PinchZoomView extends Component {
     );
   }
 }
- 
