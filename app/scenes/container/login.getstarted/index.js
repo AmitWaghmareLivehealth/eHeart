@@ -4,7 +4,8 @@ import {
   Image,
   View,
   Linking,
-  WebView
+  WebView,
+
 } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 
@@ -33,8 +34,7 @@ export default class GetStarted extends Component {
 
     return (
       <View style={styles.container}>
-        <Image source={Images.imageLivehealthLogo} style={styles.imageStyle} />
-        <Image source={Images.imageLivehealthEcoSys} style={styles.webview} />
+        <Image source={Images.imageLivehealthLogoGif} style={styles.imageStyle} />
         <View style={styles.buttonContainer}>
           <HeaderGetStartedSuperLarge
             header={title}

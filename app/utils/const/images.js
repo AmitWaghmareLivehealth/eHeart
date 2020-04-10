@@ -1,4 +1,7 @@
+export const imageLivehealthLogoGif = require("../../assets/common/logo_gif.gif");
+
 export const imageLivehealthLogo = require("../../assets/common/LiveHealth_SplashTag.png");
+
 export const imageLivehealthLogoWithTag = require("../../assets/common/LiveHealth_SplashTag.png");
 
 export const imageIntro1 = require("../../assets/common/intro_1.png");

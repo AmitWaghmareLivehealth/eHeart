@@ -40,7 +40,7 @@ export default class SplashScreen extends Component {
       <View style={styles.containerMain}>
         <Image
           style={styles.imageLivehealthLogo}
-          source={Images.imageLivehealthLogoWithTag}
+          source={Images.imageLivehealthLogoGif}
         />
       </View>
     );

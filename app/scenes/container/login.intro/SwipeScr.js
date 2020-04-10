@@ -30,7 +30,7 @@ export default class SwipeScr extends Component {
     if (this.props.screenNo <= 3) {
       return (
         <View style={styles.card}>
-          <View style={{ paddingLeft: 20,height:Global.screenHeight/2, width: Global.screenWidth * 0.95 }}>
+          <View style={{ paddingLeft: 20,height:Global.screenHeight/2, width: Global.screenWidth * 0.95,marginTop:20 }}>
             <Image source={image} style={styles.imageStyle} />
           </View>
           <HeaderGetStartedSuperLarge

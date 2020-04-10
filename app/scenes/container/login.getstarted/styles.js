@@ -22,9 +22,9 @@ const styles = StyleSheet.create({
     flex: 0.5,
     flexGrow: 5,
     flexShrink: 1,
-    justifyContent: "flex-end",
+    // justifyContent: "flex-end",
     alignItems: "center",
-    alignContent: "flex-end"
+    // alignContent: "flex-end"
   },
   webview: {
     flex: 1,
@@ -39,9 +39,8 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     resizeMode: "contain",
     width: Global.screenWidth - 50,
-    margin: 44,
-    marginBottom: 0,
-    padding: 30
+    padding: 30,
+    marginTop:'50%' 
   },
   titleLable: {
     fontSize: 17,
