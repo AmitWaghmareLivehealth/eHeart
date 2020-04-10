@@ -54,8 +54,8 @@ const styles = StyleSheet.create({
     height: Global.screenHeight
   },
   imageStyle: {
-    width: Global.screenWidth,
-    height: Global.screenWidth,
+    width: Global.screenWidth-100,
+    height: Global.screenWidth-20,
     aspectRatio: 1,
     alignSelf: "center"
   }

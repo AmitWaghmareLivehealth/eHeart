@@ -7,7 +7,7 @@ const dimen = Dimensions.get('window');
 const Global = {
   // labId: 1614,
   labId: 1837,
-  labName:'Rana Diagnostics',
+  labName:'eHeart',
   // labId: 1614,
   screenWidth: deviceWidth,
   screenHeight: deviceHeight,

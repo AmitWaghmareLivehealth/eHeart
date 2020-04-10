@@ -1,9 +1,9 @@
 export const imageLivehealthLogo = require("../../assets/common/LiveHealth_SplashTag.png");
 export const imageLivehealthLogoWithTag = require("../../assets/common/LiveHealth_SplashTag.png");
 
-export const imageIntro1 = require("../../assets/common/aspira_intro1.png");
-export const imageIntro2 = require("../../assets/common/int2.png");
-export const imageIntro3 = require("../../assets/common/Intro3.png");
+export const imageIntro1 = require("../../assets/common/intro_1.png");
+export const imageIntro2 = require("../../assets/common/intro_2.png");
+export const imageIntro3 = require("../../assets/common/intro_3.png");
 
 export const imageFabButton = require("../../assets/common/FabButton.png");
 export const imageNavButton = require("../../assets/common/navBack.png");
