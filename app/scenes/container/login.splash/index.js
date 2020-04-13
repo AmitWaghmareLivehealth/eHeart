@@ -4,6 +4,7 @@ import { NavigationActions } from "react-navigation";
 
 import styles from "./styles";
 import { Images, LoginManager, Routes } from "../../../utils";
+import UserDefaults from "../../../utils/handlers/localstorage";
 
 export default class SplashScreen extends Component {
   constructor(props) {
@@ -23,16 +24,24 @@ export default class SplashScreen extends Component {
   }
 
   navigatoWithLoginState(loginSuccess) {
-    const resetAction = NavigationActions.reset({
-      index: 0,
-      actions: [
-        NavigationActions.navigate({
-          routeName: loginSuccess ? Routes.tabbarNav : Routes.loginIntroScreen
-          // routeName: loginSuccess ? Routes.labScreen : Routes.loginIntroScreen
-        })
-      ]
+    UserDefaults.get('splashShown').then(async (result) => {
+      const route = result
+        ? loginSuccess
+          ? Routes.tabbarNav
+          : Routes.loginScreen
+        : Routes.loginIntroScreen;
+      //loginScreen
+      const resetAction = NavigationActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({
+            routeName: route,
+            // routeName: loginSuccess ? Routes.labScreen : Routes.loginIntroScreen
+          }),
+        ],
+      });
+      this.props.navigation.dispatch(resetAction);
     });
-    this.props.navigation.dispatch(resetAction);
   }
 
   render() {

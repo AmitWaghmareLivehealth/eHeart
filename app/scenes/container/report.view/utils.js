@@ -56,3 +56,8 @@ export const downloadImageFromURL = (image) => {
 getExtention = (filename) => {
   return /[.]/.exec(filename) ? /[^.]+$/.exec(filename) : undefined;
 };
+
+
+
+export const replaceHTMLTags = (text) =>
+  text.replace('<', '&lt').replace('>', '&gt');

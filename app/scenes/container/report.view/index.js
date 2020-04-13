@@ -58,6 +58,7 @@ import styles from './styles';
 import ImageScrollView from './ImageScrollView';
 import PinchZoomView from 'react-native-pinch-zoom-view';
 import ZoomImageView from './ZoomImageView';
+import { replaceHTMLTags } from './utils';
 
 const ds = new ListView.DataSource({
   rowHasChanged: (r1, r2) => r1 !== r2,
@@ -1038,7 +1039,7 @@ export default class ReportView extends Component {
                 weightTitle,
               )}
               {val.isValueVisible &&
-                _renderValTitle(val.val, {paddingRight: 4}, weightValAndUnit)}
+                _renderValTitle( replaceHTMLTags( val.val), {paddingRight: 4}, weightValAndUnit)}
               {val.isUnitVisible &&
                 _renderValTitle(val.unit, {paddingRight: 4}, '400')}
               <View

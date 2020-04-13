@@ -558,22 +558,23 @@ class Profile extends Component {
   }
 
   logout() {
-    var _this = this;
-    this.props.setUnreadFlag(0);
-    LoginManager.logout(_this);
-    // this.props.setDemographics({show:1})
-    this.props.setList([]);
-    const resetAction = NavigationActions.reset({
-      index: 0,
-      key: null,
-      actions: [
-        NavigationActions.navigate({
-          routeName: Routes.loginScreen,
-        }),
-      ],
-    });
-    this.props.navigation.dispatch(resetAction);
-    // this.props.navigation.navigate(Routes.loginScreen)
+    UserDefaults.remove(stringsUserDefaults.userToken)
+      .then((result) => {
+         this.props.setUnreadFlag(0);
+    
+        this.props.setList([]);
+        const resetAction = NavigationActions.reset({
+          index: 0,
+          key: null,
+          actions: [
+            NavigationActions.navigate({
+              routeName: Routes.loginScreen,
+            }),
+          ],
+        });
+        this.props.navigation.dispatch(resetAction);
+      })
+      .catch((err) => {});
   }
 
   setFinalImagePath(image) {
@@ -1110,7 +1111,7 @@ class Profile extends Component {
 
         <ListHeader headerText={'Help & Support'} />
 
-        <Ripple
+        {/* <Ripple
           style={styles.innerContainerStyle}
           onPress={() =>
             this.setState({
@@ -1120,7 +1121,7 @@ class Profile extends Component {
             })
           }>
           <Text style={styles.textStyle}>Help & FAQs</Text>
-        </Ripple>
+        </Ripple> */}
 
         <View style={styles.line_separator} />
 
