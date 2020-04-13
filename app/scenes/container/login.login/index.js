@@ -212,7 +212,7 @@ var cc = countryCode.sort(function (_a, _b) {
         style={styles.container}
         behavior="padding">
           <Animated.Image
-          source={Images.imageLivehealthLogoWithTag} style={[styles.logo, { height: this.imageHeight }]} />
+          source={Images.imageLivehealthLogoGif} style={[styles.logo, { height: this.imageHeight }]} />
           <HeaderGetStartedSuperLarge
             header='Get Started'
             description='Enter your number to get started'
