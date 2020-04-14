@@ -248,7 +248,7 @@ class LabScreen extends Component {
 
   render() {
     const {selectedLab = {}} = this.state;
-    console.log({selectedLab})
+    console.log({selectedLab});
     return (
       <View
         style={{
@@ -258,21 +258,21 @@ class LabScreen extends Component {
           height: '100%',
           marginTop: Global.isIphoneX ? 20 : 0,
         }}>
-        <Text
-          style={[
-            CommonStyles.textHeader2,
-            {
-              alignSelf: 'center',
-              color: Color.themeColor,
-              paddingTop: 20,
-              fontSize: 26,
-            },
-          ]}>
-          {selectedLab.labName}
-        </Text>
+        <View style={{alignContent: 'flex-start'}}>
+          <Text
+            style={[
+              CommonStyles.textHeader2,
+              {
+               
+                color: Color.themeColor,
+                paddingTop: 20,
+                fontSize: 26,
+              },
+            ]}>
+            {selectedLab.labName}
+          </Text>
 
-        <View style={{alignContent: 'center', alignSelf: 'center'}}>
-          <Text style={[CommonStyles.textDescription2]}>
+          <Text style={[CommonStyles.textDescription2, ]}>
             {selectedLab.labAddress}
           </Text>
           <Text style={[CommonStyles.textDescription2, {marginTop: 10}]}>
