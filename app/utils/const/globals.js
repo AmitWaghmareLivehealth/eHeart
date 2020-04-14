@@ -14,7 +14,7 @@ const Global = {
   iOSPlatform: Platform.OS === 'ios',
   osVersion: Platform.Version > 22,
   developerId: 'c4a03b1a-676a-11ea-bc55-0242ac130003',
-//   developerId: 1,
+  // developerId: 1,
 
   currencySymbol: '\u20B9',
   LTHDateFormat: "yyyy-MM-dd'T'HH:mm:ss'Z'",

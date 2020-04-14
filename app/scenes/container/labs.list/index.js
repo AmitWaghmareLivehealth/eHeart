@@ -74,7 +74,7 @@ class LabsList extends Component {
     var _this = this;
 
     NetworkRequest(_this, 'POST', URLs.searchCenterTestsSpecialityURL, params)
-      .then(result => {
+      .then((result) => {
         if (result.success) {
           if ((result.response.code || 0) === 200) {
             this.loadingManipulate(false);
@@ -87,7 +87,7 @@ class LabsList extends Component {
           this.loadingManipulate(false);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         this.loadingManipulate(false);
         console.error(error);
       });
@@ -103,7 +103,7 @@ class LabsList extends Component {
 
     this.loadingManipulate(true);
     UserDefaults.get(stringsUserDefaults.userToken)
-      .then(token => {
+      .then((token) => {
         var _this = this;
         var params =
           'area=' +
@@ -129,7 +129,7 @@ class LabsList extends Component {
           URLs.searchCenterTestsSpecialityURL,
           params,
         )
-          .then(result => {
+          .then((result) => {
             if (result.success) {
               if ((result.response.code || 0) === 200) {
                 this.loadingManipulate(false);
@@ -140,6 +140,7 @@ class LabsList extends Component {
                     labId: result.response.labs[0].labId,
                     locationName: this.state.locationName,
                     formattedAddress: this.state.formattedAddress,
+                    lab:result.response.labs[0],
                   });
                 }
               } else {
@@ -149,18 +150,18 @@ class LabsList extends Component {
               this.loadingManipulate(false);
             }
           })
-          .catch(error => {
+          .catch((error) => {
             this.loadingManipulate(false);
             console.error(error);
           });
       })
-      .catch(error => {
+      .catch((error) => {
         this.loadingManipulate(false);
         console.error(error);
       });
   }
 
-  loadingManipulate = flag => {
+  loadingManipulate = (flag) => {
     this.setState({
       isLoading: flag,
     });
@@ -169,7 +170,7 @@ class LabsList extends Component {
   gotoLabScreen = (labId, lab) => {
     this.props.navigation.navigate(Routes.labScreen, {
       labId: labId,
-      lab:lab,
+      lab: lab,
       locationName: this.state.locationName,
       formattedAddress: this.state.formattedAddress,
     });
@@ -193,7 +194,7 @@ class LabsList extends Component {
     return valid;
   };
 
-  convertTo12 = time => {
+  convertTo12 = (time) => {
     time = time
       .toString()
       .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
@@ -207,46 +208,48 @@ class LabsList extends Component {
   };
 
   renderLabs = ({item}) => {
-    let timings = JSON.parse(item.labTimings);
+    if (item.labTimings) {
+      let timings = JSON.parse(item.labTimings);
 
-    let labTimings = timings.timings;
-    let weekday = [
-      {day: 'Sunday', index: 0},
-      {day: 'Monday', index: 1},
-      {day: 'Tuesday', index: 2},
-      {day: 'Wednesday', index: 2},
-      {day: 'Thursday', index: 2},
-      {day: 'Friday', index: 2},
-      {day: 'Saturday', index: 2},
-    ];
+      let labTimings = timings.timings;
+      let weekday = [
+        {day: 'Sunday', index: 0},
+        {day: 'Monday', index: 1},
+        {day: 'Tuesday', index: 2},
+        {day: 'Wednesday', index: 2},
+        {day: 'Thursday', index: 2},
+        {day: 'Friday', index: 2},
+        {day: 'Saturday', index: 2},
+      ];
 
-    let todaysDay = moment().format('dddd');
+      let todaysDay = moment().format('dddd');
 
-    let i = 0;
-    weekday.map(ins => {
-      if (todaysDay == ins.day) {
-        i = ins.index;
+      let i = 0;
+      weekday.map((ins) => {
+        if (todaysDay == ins.day) {
+          i = ins.index;
+        }
+      });
+      if (labTimings[i]) {
+        let bool = this.checkIsOpen(labTimings[i].from, labTimings[i].to);
+
+        let from = this.convertTo12(labTimings[i].from.slice(0, -3));
+        let to = this.convertTo12(labTimings[i].to.slice(0, -3));
+
+        let str = `${from} to ${to}`;
+
+        return (
+          <LabCard
+            onPressAction={() => this.gotoLabScreen(item.labId, item)}
+            headerText={item.labName}
+            subheaderText={item.labAddress}
+            actualType={str}
+            isOpen={bool}
+            textType1={item.distance}
+            textType2={item.travelTime}
+          />
+        );
       }
-    });
-    if (labTimings[i]) {
-      let bool = this.checkIsOpen(labTimings[i].from, labTimings[i].to);
-
-      let from = this.convertTo12(labTimings[i].from.slice(0, -3));
-      let to = this.convertTo12(labTimings[i].to.slice(0, -3));
-
-      let str = `${from} to ${to}`;
-
-      return (
-        <LabCard
-          onPressAction={() => this.gotoLabScreen(item.labId, item)}
-          headerText={item.labName}
-          subheaderText={item.labAddress}
-          actualType={str}
-          isOpen={bool}
-          textType1={item.distance}
-          textType2={item.travelTime}
-        />
-      );
     }
     return <View></View>;
   };
@@ -286,12 +289,12 @@ class LabsList extends Component {
 
 function mapDispatchToActions(dispatch) {
   return {
-    setDemographics: arr => dispatch(setDemographics(arr)),
-    setUnreadFlag: num => dispatch(setUnreadFlag(num)),
+    setDemographics: (arr) => dispatch(setDemographics(arr)),
+    setUnreadFlag: (num) => dispatch(setUnreadFlag(num)),
   };
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   demographics: state.demographics,
 });
 

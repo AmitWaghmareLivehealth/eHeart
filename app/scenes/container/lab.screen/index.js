@@ -100,53 +100,55 @@ class LabScreen extends Component {
       location: this.state.locationName,
       latlng: latlng,
       city: city,
-      labId:this.state.labId,
+      labId: this.state.labId,
       cartData: {},
       cartCount: 0,
     });
   };
 
   renderLabTimings = () => {
-    const {selectedLab} = this.state;
+    const {selectedLab = {}} = this.state;
+    if (selectedLab.labTimings) {
+      let timings = JSON.parse(selectedLab.labTimings);
+      let labTimings = timings.timings;
+      let weekday = [
+        'Sunday',
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+      ];
 
-    let timings = JSON.parse(selectedLab.labTimings);
-    let labTimings = timings.timings;
-    let weekday = [
-      'Sunday',
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-    ];
+      let n = -1;
 
-    let n = -1;
+      return labTimings.map((ins, i) => {
+        n++;
 
-    return labTimings.map((ins, i) => {
-      n++;
+        let from = this.convertTo12(ins.from.slice(0, -3));
+        let to = this.convertTo12(ins.to.slice(0, -3));
 
-      let from = this.convertTo12(ins.from.slice(0, -3));
-      let to = this.convertTo12(ins.to.slice(0, -3));
-
-      return (
-        <View
-          key={i}
-          style={{
-            flexDirection: 'row',
-            flex: 0,
-            flexWrap: 'wrap',
-            paddingHorizontal: 16,
-            paddingVertical: 4,
-            width: Global.screenWidth,
-          }}>
-          <Text>{weekday[n]} </Text>
-          <Text>
-            {from} - {to}
-          </Text>
-        </View>
-      );
-    });
+        return (
+          <View
+            key={i}
+            style={{
+              flexDirection: 'row',
+              flex: 0,
+              flexWrap: 'wrap',
+              paddingHorizontal: 16,
+              paddingVertical: 4,
+              width: Global.screenWidth,
+            }}>
+            <Text>{weekday[n]} </Text>
+            <Text>
+              {from} - {to}
+            </Text>
+          </View>
+        );
+      });
+    }
+    return <View></View>;
   };
 
   checkIsOpen = (startTime, endTime) => {
@@ -167,7 +169,7 @@ class LabScreen extends Component {
     return valid;
   };
 
-  convertTo12 = time => {
+  convertTo12 = (time) => {
     time = time
       .toString()
       .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
@@ -180,7 +182,7 @@ class LabScreen extends Component {
     return time.join('');
   };
 
-  checkLabAvailability = labTimings => {
+  checkLabAvailability = (labTimings) => {
     let weekends = [0, 6];
     let same_time_array = [];
 
@@ -189,12 +191,12 @@ class LabScreen extends Component {
 
     // labtimes.every(labtimes[0]);
 
-    labtimes.map(ins => {
+    labtimes.map((ins) => {
       labtimes;
     });
   };
 
-  afterUpdate = response => {
+  afterUpdate = (response) => {
     console.log('Reponse', response.labObj);
 
     let labs = response.labObj;
@@ -214,7 +216,7 @@ class LabScreen extends Component {
       {day: 'Saturday', index: 2},
     ];
     let i = 0;
-    weekday.map(ins => {
+    weekday.map((ins) => {
       if (todaysDay == ins.day) {
         i = ins.index;
       }
@@ -245,7 +247,8 @@ class LabScreen extends Component {
   };
 
   render() {
-    const {selectedLab} = this.state;
+    const {selectedLab = {}} = this.state;
+    console.log({selectedLab})
     return (
       <View
         style={{
@@ -268,17 +271,12 @@ class LabScreen extends Component {
           {selectedLab.labName}
         </Text>
 
-        <View
-          style={{alignContent: 'center', alignSelf: 'center'}}>
+        <View style={{alignContent: 'center', alignSelf: 'center'}}>
           <Text style={[CommonStyles.textDescription2]}>
             {selectedLab.labAddress}
           </Text>
           <Text style={[CommonStyles.textDescription2, {marginTop: 10}]}>
             Email:{selectedLab.labEmail}
-          </Text>
-
-          <Text style={[CommonStyles.textDescription2]}>
-            www.aspiradiagnostics.com/
           </Text>
 
           <Text style={[CommonStyles.textDescription2]}>
@@ -326,12 +324,12 @@ class LabScreen extends Component {
 
 function mapDispatchToActions(dispatch) {
   return {
-    setDemographics: arr => dispatch(setDemographics(arr)),
-    setUnreadFlag: num => dispatch(setUnreadFlag(num)),
+    setDemographics: (arr) => dispatch(setDemographics(arr)),
+    setUnreadFlag: (num) => dispatch(setUnreadFlag(num)),
   };
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   demographics: state.demographics,
 });
 
