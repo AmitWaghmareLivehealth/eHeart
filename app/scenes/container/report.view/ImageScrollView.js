@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Text, ScrollView, Image, TouchableOpacity, Linking} from 'react-native';
 import Global from '../../../utils/const/globals';
+import {URLs} from '../../../utils/const/urls';
 import {View} from 'native-base';
 import ImageCard from './ImageCard';
 
@@ -26,7 +27,7 @@ export default class ImageScrollView extends Component {
                   onImageSelect(image);
                   return
                 }
-                Linking.openURL(image.url).catch(err =>
+                Linking.openURL(URLs.fileDownloadPath+image.url).catch(err =>
                   console.error('An error occurred', err),
                 );
               }}>

@@ -13,6 +13,7 @@ import { Global, Routes, Images } from '../../../utils'
 import { Button } from '../../components'
 import { HeaderGetStartedSuperLarge } from '../../layouts'
 import styles from './styles'
+import UserDefaults from '../../../utils/handlers/localstorage';
 
 var imageWidth = Global.screenWidth * (3 / 4)
 // var htmlscr = '<html><body><img src='{require(./../../../assets/ios/LiveHealthEcoSystem.gif)}' style='width:'+imageWidth+'px;height:'+imageWidth+'px'><body></html>'
@@ -27,7 +28,9 @@ export default class GetStarted extends Component {
     Linking.openURL('http://www.youtube.com/watch?v=415LFlqVnBQ')
      .catch(err => console.error('An error occurred', err))
   }
-
+  componentDidMount() {
+    UserDefaults.set('splashShown', true);
+  }
   render () {
     let title = 'Get Started'
     let desc = `Sign up to get all the benefits of ${Global.labName}`

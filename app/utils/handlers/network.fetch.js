@@ -68,5 +68,7 @@ export default async function RESTRequest ( _this,method: NetworkRequest, url:st
     // } else {
     //   return handleErrorWithResponseCode('error', 109)
     // }
-  }).catch(error => handleErrorWithResponseCode(error, 109))
+  }).catch(error =>{ 
+    console.log(error)
+    handleErrorWithResponseCode(error, 109)})
 }
