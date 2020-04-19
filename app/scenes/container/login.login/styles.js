@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     width: Global.screenWidth - 50,
     // aspectRatio: 3.59,
     resizeMode: "contain",
-    marginBottom: 60,
+    marginBottom: 20,
     marginTop: -20
   }
 });

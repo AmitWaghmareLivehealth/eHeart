@@ -213,6 +213,8 @@ var cc = countryCode.sort(function (_a, _b) {
         behavior="padding">
           <Animated.Image
           source={Images.imageLivehealthLogoGif} style={[styles.logo, { height: this.imageHeight }]} />
+         
+          <Text style={{fontSize:16,fontWeight:'700'}}>eHeart Doorstep Diagnosis</Text>
           <HeaderGetStartedSuperLarge
             header='Get Started'
             description='Enter your number to get started'

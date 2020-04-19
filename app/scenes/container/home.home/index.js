@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from 'react';
 import {
   View,
   Text,
@@ -17,15 +17,15 @@ import {
   Easing,
   PermissionsAndroid,
   Alert,
-  RefreshControl
-} from "react-native";
-import NetInfo from "@react-native-community/netinfo";
+  RefreshControl,
+} from 'react-native';
+import NetInfo from '@react-native-community/netinfo';
 
-import { connect } from "react-redux";
-import DashboardTrackers from "../../components/dashboardtrackers";
-import InsuranceModal from "../../components/insurance.component";
-import SwipeInfoText from "../../components/swipeinfotext";
-import DummyCard from "../../components/dummycard";
+import {connect} from 'react-redux';
+import DashboardTrackers from '../../components/dashboardtrackers';
+import InsuranceModal from '../../components/insurance.component';
+import SwipeInfoText from '../../components/swipeinfotext';
+import DummyCard from '../../components/dummycard';
 import {
   URLs,
   Routes,
@@ -41,62 +41,64 @@ import {
   stringsUserDefaults,
   stringRazorPay,
   stringsNotifications,
-  LocationManager
-} from "../../../utils";
-import moment from "moment";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+  LocationManager,
+} from '../../../utils';
+import moment from 'moment';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {
   Ripple,
   ProgressBar,
   ModalBox,
   AppLink,
   Tutorial,
-  ProgressCircle
-} from "../../components";
-import { getList } from "../../../redux/actions/pinnedtrackers";
-import { setList } from "../../../redux/actions/pinnedtrackers";
-import StarRatingBar from "../../components/rating";
-import TipsTricks from "../tips.tricks";
-import RazorpayCheckout from "react-native-razorpay";
-import Feedback from "../feedback";
-import PendingReportView from "../pending.reportview";
-import TrackerDetails from "../tracker.details";
-import ReportView from "../report.view";
-import { init } from "../../../utils/handlers/notification.remote";
+  ProgressCircle,
+} from '../../components';
+import {getList} from '../../../redux/actions/pinnedtrackers';
+import {setList} from '../../../redux/actions/pinnedtrackers';
+import StarRatingBar from '../../components/rating';
+import TipsTricks from '../tips.tricks';
+import RazorpayCheckout from 'react-native-razorpay';
+import Feedback from '../feedback';
+import PendingReportView from '../pending.reportview';
+import TrackerDetails from '../tracker.details';
+import ReportView from '../report.view';
+import {init} from '../../../utils/handlers/notification.remote';
 // import {
 //   NotificationsAndroid,
 //   PendingNotifications
 // } from "react-native-notifications";
 // import NotificationsIOS from "react-native-notifications";
-import Intercom from "react-native-intercom";
-import LocationServicesDialogBox from "react-native-android-location-services-dialog-box";
-import Upcoming from "../upcoming/";
-import AllUpcomingOrders from "../allUpcomingOrders/";
-import getDirections from "../../components/getDirections/";
-import PendingUpcomingOrder from "../pending.upcoming.order/";
-import Demographics from "../../components/demographics";
-import { stringDictId } from "../../../utils/const/strings";
-import { setUnreadFlag } from "../../../redux/actions/index";
-import { setDemographics } from "../../../redux/actions/index";
-import { setCurrency } from "../../../redux/actions/index";
-import { NavigationActions } from "react-navigation";
+import Intercom from 'react-native-intercom';
+import LocationServicesDialogBox from 'react-native-android-location-services-dialog-box';
+import Upcoming from '../upcoming/';
+import AllUpcomingOrders from '../allUpcomingOrders/';
+import getDirections from '../../components/getDirections/';
+import PendingUpcomingOrder from '../pending.upcoming.order/';
+import Demographics from '../../components/demographics';
+import {stringDictId} from '../../../utils/const/strings';
+import {setUnreadFlag} from '../../../redux/actions/index';
+import {setDemographics} from '../../../redux/actions/index';
+import {setCurrency} from '../../../redux/actions/index';
+import {NavigationActions} from 'react-navigation';
 import Geolocation from '@react-native-community/geolocation';
+import {PHONE_NUMBER} from './const';
+import CustomCardForEHeart from './CustomCardForEHeart';
+import { updateRawData } from '../report.view/updateRawData';
 
-
-var _ = require("lodash");
+var _ = require('lodash');
 
 let mainScreen;
 
 function onNotificationOpened(notification) {
   if (mainScreen) {
-    console.log("NOTIFICATION CLICKED", notification);
+    console.log('NOTIFICATION CLICKED', notification);
     // mainScreen.onNotificationOpened(notification);
   }
 }
 
 function onNotificationReceived(notification) {
   if (mainScreen) {
-    console.log("NOTIFICATION RECEIVED", notification);
+    console.log('NOTIFICATION RECEIVED', notification);
     // mainScreen.onNotificationReceived(notification);
   }
 }
@@ -107,9 +109,9 @@ if (!Global.iOSPlatform) {
 }
 
 var score_before = 0;
-var Fabric = require("react-native-fabric");
+var Fabric = require('react-native-fabric');
 
-var { Crashlytics } = Fabric;
+var {Crashlytics} = Fabric;
 
 var args_bundle = {};
 
@@ -126,9 +128,9 @@ class Home extends Component {
       args_bundle: args_bundle,
       springVal: new Animated.Value(1),
       pinnedTrackers: [],
-      user: "",
-      pending_report: "",
-      labName: "",
+      user: '',
+      pending_report: '',
+      labName: '',
       labId: 0,
       billId: 0,
       isUnreadReportFlag: false,
@@ -138,15 +140,15 @@ class Home extends Component {
       pendingReports: [],
       rating: 0,
       tipCount: 1,
-      email: "",
-      contact: "",
+      email: '',
+      contact: '',
       isLoading: false,
-      unreadLab: "",
+      unreadLab: '',
       isInitialLoading: true,
-      unreadReports: "",
+      unreadReports: '',
       user_id: 0,
       userDetailsId_id: 0,
-      uuid: "",
+      uuid: '',
       dictionaryId: 0,
       initialCount: 0,
       modal_visible: false,
@@ -159,11 +161,11 @@ class Home extends Component {
       isOpen: false,
       selectedSectionArray: [],
       selectedItemModal: undefined,
-      userName: "",
+      userName: '',
       playStoreId: stringsAppId.androidId,
       appStoreId: stringsAppId.iosId,
       notification: {},
-      reportId: "",
+      reportId: '',
       isConnection: false,
       isScrollable: false,
       toVal: 0.99,
@@ -179,18 +181,18 @@ class Home extends Component {
       collectingPersonId: 0,
       homecollectionId: 0,
       takePhlebotomistReview: false,
-      phlebotomistName: "",
-      labNameHC: "",
+      phlebotomistName: '',
+      labNameHC: '',
       razorpay_item: {},
       showNotification: false,
-      notificationHeader: "",
-      notificationSubText: "",
+      notificationHeader: '',
+      notificationSubText: '',
       demographyCount: 1,
       insuranceModal: false,
-      indicatorText: "",
+      indicatorText: '',
       processing: 0,
       isShowBooking: 0,
-      money: "&#8377;"
+      money: '&#8377;',
     };
 
     mainScreen = this;
@@ -251,7 +253,7 @@ class Home extends Component {
     this.callNotification = this.callNotification.bind(this);
     this.closeNotification = this.closeNotification.bind(this);
     this.onNotificationOpenedForeground = this.onNotificationOpenedForeground.bind(
-      this
+      this,
     );
     this.getDemographics = this.getDemographics.bind(this);
     this.renderInsuranceModal = this.renderInsuranceModal.bind(this);
@@ -262,9 +264,9 @@ class Home extends Component {
   }
 
   setInsuranceName(name) {
-    args_bundle["hasInsurance"] = 1;
-    args_bundle["insuranceName"] = name;
-    args_bundle["hasInsurance_date"] = currentTime;
+    args_bundle['hasInsurance'] = 1;
+    args_bundle['insuranceName'] = name;
+    args_bundle['hasInsurance_date'] = currentTime;
 
     UserDefaults.set(stringsUserDefaults.hasInsurance_date, currentTime);
     UserDefaults.set(stringsUserDefaults.hasInsurance, 1);
@@ -272,54 +274,65 @@ class Home extends Component {
 
     {
       UserDefaults.get(stringsUserDefaults.userToken)
-        .then(token => {
+        .then(async (token) => {
           let params =
-            "token=" +
-            (token || "") +
-            "&args=" +
-            (JSON.stringify(args_bundle) || "");
-
+            'token=' +
+            (token || '') +
+            '&args=' +
+            (JSON.stringify(args_bundle) || '');
+ 
           NetworkRequest(
             this,
-            "POST",
+            'POST',
             URLs.savePatientDemographicDetails,
-            params
+            params,
           )
-            .then(result => {
+            .then((result) => {
+              
               if (result.success) {
                 if ((result.response.code || 0) === 200) {
                   cnt = this.state.demographyCount;
                   cnt++;
-                  this.setState({ processing: 0, demographyCount: cnt });
+                  this.setState({processing: 0, demographyCount: cnt});
 
                   args_bundle = {};
 
-                  console.log("DEMO COUNT: ", this.state.demographyCount);
+                  console.log('DEMO COUNT: ', this.state.demographyCount);
                 } else if ((result.response.code || 0) === 500) {
-                  console.log("FAILURE");
+                  console.log('FAILURE');
 
-                  Alert.alert("Failed", "Please try again", [
-                    { text: "OK", onPress: () => {} }
+                  Alert.alert('Failed', 'Please try again', [
+                    {text: 'OK', onPress: () => {}},
                   ]);
                 } else {
-                  console.log("Error1");
+                  console.log('Error1');
                 }
               }
-            })
-            .catch(error => {
+
+             })
+            .catch((error) => {
               console.error(error);
             });
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(error);
         });
     }
   }
-
+  getLabDetails = (params) => {
+    NetworkRequest(this, 'POST', URLs.getLabDetails, params)
+      .then((result) => {
+        if(result && result.response)
+        {
+        this.setState({lab:result.response.labObj})
+        }
+      })
+      .catch((err) => {});
+  };
   _onRefresh() {
-    this.setState({ refreshing: true, demographyCount: 2 });
+    this.setState({refreshing: true, demographyCount: 2});
     this.getData().then(() => {
-      this.setState({ refreshing: false });
+      this.setState({refreshing: false});
     });
   }
 
@@ -335,14 +348,14 @@ class Home extends Component {
   // 	console.log("Notification opened by device user", notification);
   // }
 
-  _handleAppStateChange = nextAppState => {
-    if (this.state.appState.match("active") && nextAppState === "background") {
-      console.log("App has come to the background!");
+  _handleAppStateChange = (nextAppState) => {
+    if (this.state.appState.match('active') && nextAppState === 'background') {
+      console.log('App has come to the background!');
       UserDefaults.set(stringsUserDefaults.first_entry, 0);
       UserDefaults.set(stringsUserDefaults.city_list, []);
     }
-    if (this.state.appState.match("background") && nextAppState === "active") {
-      console.log("App has come to foreground");
+    if (this.state.appState.match('background') && nextAppState === 'active') {
+      console.log('App has come to foreground');
       try {
         if (Global.iOSPlatform) {
           // PushNotificationIOS.setApplicationIconBadgeNumber(0);
@@ -351,13 +364,13 @@ class Home extends Component {
         console.log(error);
       }
     }
-    this.setState({ appState: nextAppState });
+    this.setState({appState: nextAppState});
   };
 
   componentWillUnmount() {
     // Don't forget to remove the event listeners to prevent memory leaks!
     try {
-      AppState.removeEventListener("change", this._handleAppStateChange);
+      AppState.removeEventListener('change', this._handleAppStateChange);
     } catch (error) {
       console.error(error);
     }
@@ -395,26 +408,26 @@ class Home extends Component {
     }
 
     UserDefaults.get(stringsUserDefaults.pinnedTracker)
-      .then(pinnedTracker => {
+      .then((pinnedTracker) => {
         if (pinnedTracker) {
           UserDefaults.set(stringsUserDefaults.pinnedTracker, false);
           var pinnedTrackers = this.props.pinnedTrackers.pinnedTrackers;
           this.setState({
-            pinnedTrackers: pinnedTrackers
+            pinnedTrackers: pinnedTrackers,
           });
           var dictionaryArray = [];
-          pinnedTrackers.forEach(val => {
+          pinnedTrackers.forEach((val) => {
             dictionaryArray.push(val.dictionaryId);
           });
           UserDefaults.set(stringsUserDefaults.dictionaryArray, []);
           UserDefaults.set(
             stringsUserDefaults.dictionaryArray,
-            dictionaryArray
+            dictionaryArray,
           );
           // this.getData()
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
   }
@@ -427,16 +440,16 @@ class Home extends Component {
       reportModal: false,
       reportViewModal: false,
       trackerModal: false,
-      insuranceModal: true
+      insuranceModal: true,
     });
   }
 
   componentWillUpdate() {
     UserDefaults.get(stringsUserDefaults.notificationFlag)
-      .then(notificationFlag => {
+      .then((notificationFlag) => {
         if (notificationFlag) {
           UserDefaults.get(stringsUserDefaults.notificationJson)
-            .then(notificationJson => {
+            .then((notificationJson) => {
               if (notificationJson) {
                 UserDefaults.set(stringsUserDefaults.notificationFlag, false);
                 UserDefaults.set(stringsUserDefaults.notificationJson, {});
@@ -468,21 +481,21 @@ class Home extends Component {
                 }
               }
             })
-            .catch(error => {
+            .catch((error) => {
               console.error(error);
             });
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
   }
 
   componentDidMount() {
-    user = "";
-    demographics = "";
+    user = '';
+    demographics = '';
 
-    UserDefaults.get(stringsUserDefaults.user).then(user => {
+    UserDefaults.get(stringsUserDefaults.user).then((user) => {
       if (user) {
         if (user.user.email) {
           email = 1;
@@ -502,7 +515,7 @@ class Home extends Component {
       }
     });
 
-    UserDefaults.get(stringsUserDefaults.demographics).then(demographics => {
+    UserDefaults.get(stringsUserDefaults.demographics).then((demographics) => {
       if (demographics) {
         if (demographics._source) {
           if (
@@ -544,35 +557,37 @@ class Home extends Component {
           }
         }
 
-        UserDefaults.get(stringsUserDefaults.height).then(height => {
+        UserDefaults.get(stringsUserDefaults.height).then((height) => {
           if (height > 0) {
-            this.props.setDemographics({ height: 1 });
+            this.props.setDemographics({height: 1});
           }
         });
 
         UserDefaults.get(stringsUserDefaults.weight)
-          .then(weight => {
+          .then((weight) => {
             if (weight > 0) {
-              this.props.setDemographics({ weight: 1 });
+              this.props.setDemographics({weight: 1});
             }
           })
-          .catch(error => {
+          .catch((error) => {
             console.error(error);
           });
 
         UserDefaults.get(stringsUserDefaults.activenessLevel).then(
-          activenessLevel => {
+          (activenessLevel) => {
             if (activenessLevel.length > 0) {
-              this.props.setDemographics({ activenessLevel: 1 });
+              this.props.setDemographics({activenessLevel: 1});
             }
-          }
+          },
         );
 
-        UserDefaults.get(stringsUserDefaults.stressLevel).then(stressLevel => {
-          if (stressLevel.length > 0) {
-            this.props.setDemographics({ stressLevel: 1 });
-          }
-        });
+        UserDefaults.get(stringsUserDefaults.stressLevel).then(
+          (stressLevel) => {
+            if (stressLevel.length > 0) {
+              this.props.setDemographics({stressLevel: 1});
+            }
+          },
+        );
 
         this.props.setDemographics({
           industryType: industryType,
@@ -589,7 +604,7 @@ class Home extends Component {
           fullName: fullName,
           profilePic: profilePic,
           dateOfBirth: dateOfBirth,
-          sex: sex
+          sex: sex,
         });
       }
     });
@@ -616,24 +631,24 @@ class Home extends Component {
         this.props.demographics.demographics.dateOfBirth &&
         this.props.demographics.demographics.sex
       ) {
-        this.props.setDemographics({ show: 1 });
+        this.props.setDemographics({show: 1});
       } else {
-        this.props.setDemographics({ show: 0 });
+        this.props.setDemographics({show: 0});
       }
     }, 500);
 
     try {
-      AppState.addEventListener("change", this._handleAppStateChange);
+      AppState.addEventListener('change', this._handleAppStateChange);
       try {
         UserDefaults.get(stringsUserDefaults.first_entry)
-          .then(first_entry => {
+          .then((first_entry) => {
             if (first_entry === 0) {
               UserDefaults.set(stringsUserDefaults.city_list, []);
             }
             first_entry += 1;
             UserDefaults.set(stringsUserDefaults.first_entry, first_entry);
           })
-          .catch(error => {
+          .catch((error) => {
             console.error(error);
           });
       } catch (error) {
@@ -641,7 +656,6 @@ class Home extends Component {
       }
 
       if (!Global.iOSPlatform) {
-
         // PendingNotifications.getInitialNotification()
         //   .then(notification => {
         //     if (
@@ -716,14 +730,14 @@ class Home extends Component {
       console.error(error);
     }
 
-    NetInfo.isConnected.fetch().then(isConnected => {
+    NetInfo.isConnected.fetch().then((isConnected) => {
       isConnected
         ? this.setState({
             isConnection: true,
             isLoading: true,
-            isInitialLoading: true
+            isInitialLoading: true,
           })
-        : this.setState({ isConnection: false });
+        : this.setState({isConnection: false});
     });
 
     if (this.state.isConnection) {
@@ -731,7 +745,7 @@ class Home extends Component {
       try {
         var uuid = this.guid();
         this.setState({
-          uuid: uuid
+          uuid: uuid,
         });
       } catch (error) {
         console.error(error);
@@ -742,7 +756,7 @@ class Home extends Component {
       try {
         var uuid = this.guid();
         this.setState({
-          uuid: uuid
+          uuid: uuid,
         });
       } catch (error) {
         console.error(error);
@@ -760,7 +774,7 @@ class Home extends Component {
       toValue: 1,
       speed: 8,
       bounciness: -10,
-      velocity: 10
+      velocity: 10,
     }).start();
   }
 
@@ -768,7 +782,7 @@ class Home extends Component {
     this.springValue.setValue(0.99);
     //this.setState({springVal:0.97})
     Animated.spring(this.state.springVal, {
-      toValue: 0.97
+      toValue: 0.97,
       //  springVal:0.97
     }).start();
   }
@@ -777,29 +791,27 @@ class Home extends Component {
     this.springValue.setValue(0.97);
     //this.setState({springVal: 0.99})
     Animated.spring(this.state.springVal, {
-      toValue: 1
+      toValue: 1,
       //springVal:1
     }).start();
   }
 
   getDemographics(data) {
-    this.setState({ processing: 1 });
+    this.setState({processing: 1});
 
     time = moment().format();
     currentTime = String(
-      moment(time)
-        .utc()
-        .format(Global.LTHDateFormatMoment) + "Z"
+      moment(time).utc().format(Global.LTHDateFormatMoment) + 'Z',
     );
 
     switch (this.state.demographyCount) {
       case 1:
-        args_bundle["frequencyOfHealthCheckup"] = data;
-        args_bundle["frequencyOfHealthCheckup_date"] = currentTime;
+        args_bundle['frequencyOfHealthCheckup'] = data;
+        args_bundle['frequencyOfHealthCheckup_date'] = currentTime;
 
         UserDefaults.set(
           stringsUserDefaults.frequencyOfHealthCheckup_date,
-          currentTime
+          currentTime,
         );
 
         break;
@@ -808,23 +820,23 @@ class Home extends Component {
         //args_bundle['activenessLevel'] = data
         this.saveTrackerData(
           stringDictId.activenessLevel,
-          "activenessLevel",
-          data
+          'activenessLevel',
+          data,
         );
         break;
 
       case 3:
         //  args_bundle['stressLevel'] = data
-        this.saveTrackerData(stringDictId.stressLevel, "stressLevel", data);
+        this.saveTrackerData(stringDictId.stressLevel, 'stressLevel', data);
         break;
 
       case 4:
         if (data != 0) {
           this.renderInsuranceModal();
         } else {
-          args_bundle["hasInsurance"] = data;
+          args_bundle['hasInsurance'] = data;
 
-          args_bundle["hasInsurance_date"] = currentTime;
+          args_bundle['hasInsurance_date'] = currentTime;
 
           UserDefaults.set(stringsUserDefaults.hasInsurance_date, currentTime);
           UserDefaults.set(stringsUserDefaults.hasInsurance, data);
@@ -832,8 +844,8 @@ class Home extends Component {
         break;
 
       case 5:
-        args_bundle["onMedications"] = data;
-        args_bundle["onMedications_date"] = currentTime;
+        args_bundle['onMedications'] = data;
+        args_bundle['onMedications_date'] = currentTime;
         UserDefaults.set(stringsUserDefaults.onMedications_date, currentTime);
         break;
     }
@@ -844,118 +856,116 @@ class Home extends Component {
       this.state.demographyCount == 5
     ) {
       UserDefaults.get(stringsUserDefaults.userToken)
-        .then(token => {
+        .then((token) => {
           let params =
-            "token=" +
-            (token || "") +
-            "&args=" +
-            (JSON.stringify(args_bundle) || "");
+            'token=' +
+            (token || '') +
+            '&args=' +
+            (JSON.stringify(args_bundle) || '');
 
           NetworkRequest(
             this,
-            "POST",
+            'POST',
             URLs.savePatientDemographicDetails,
-            params
+            params,
           )
-            .then(result => {
+            .then((result) => {
               if (result.success) {
                 if ((result.response.code || 0) === 200) {
                   cnt = this.state.demographyCount;
                   cnt++;
-                  this.setState({ processing: 0, demographyCount: cnt });
+                  this.setState({processing: 0, demographyCount: cnt});
                   args_bundle = {};
-                  console.log("DEMO COUNT: ", this.state.demographyCount);
+                  console.log('DEMO COUNT: ', this.state.demographyCount);
                 } else if ((result.response.code || 0) === 500) {
-                  console.log("FAILURE");
+                  console.log('FAILURE');
 
-                  Alert.alert("Failed", "Please try again", [
-                    { text: "OK", onPress: () => {} }
+                  Alert.alert('Failed', 'Please try again', [
+                    {text: 'OK', onPress: () => {}},
                   ]);
                 } else {
                   // this.loadingManipulate(false)
-                  console.log("Error1");
+                  console.log('Error1');
                 }
               }
             })
-            .catch(error => {
+            .catch((error) => {
               //console.log('Error2')
               //   this.setState({ isLoading:false})
               console.error(error);
             });
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(error);
         });
     }
   }
 
   saveTrackerData(dictId, label, data) {
-    this.setState({ processing: 1 });
+    this.setState({processing: 1});
 
     time = moment().format();
     currentTime = String(
-      moment(time)
-        .utc()
-        .format(Global.LTHDateFormatMoment) + "Z"
+      moment(time).utc().format(Global.LTHDateFormatMoment) + 'Z',
     );
 
     UserDefaults.get(stringsUserDefaults.userToken)
-      .then(token => {
+      .then((token) => {
         var params =
-          "token=" +
+          'token=' +
           token +
-          "&dictionaryId=" +
+          '&dictionaryId=' +
           dictId +
-          "&label=" +
+          '&label=' +
           label +
-          "&reportDate=" +
+          '&reportDate=' +
           currentTime +
-          "&value=" +
+          '&value=' +
           data +
-          "&unit=" +
-          "-";
+          '&unit=' +
+          '-';
 
-        NetworkRequest(this, "POST", URLs.saveTrackerData, params)
-          .then(result => {
+        NetworkRequest(this, 'POST', URLs.saveTrackerData, params)
+          .then((result) => {
             if (result.success) {
               if ((result.response.code || 0) === 200) {
                 cnt = this.state.demographyCount;
                 cnt++;
 
-                this.setState({ processing: 0, demographyCount: cnt });
+                this.setState({processing: 0, demographyCount: cnt});
 
                 //Save in async
                 if (dictId == stringDictId.activenessLevel) {
                   UserDefaults.get(stringsUserDefaults.activenessLevel).then(
-                    activenessLevel => {
+                    (activenessLevel) => {
                       arr = activenessLevel ? activenessLevel : [];
-                      obj = { reportDate: currentTime, value: data };
+                      obj = {reportDate: currentTime, value: data};
 
                       arr.splice(0, 0, obj);
 
                       UserDefaults.set(
                         stringsUserDefaults.activenessLevel,
-                        arr || ""
+                        arr || '',
                       );
-                    }
+                    },
                   );
                 } else if (dictId == stringDictId.stressLevel) {
                   UserDefaults.get(stringsUserDefaults.stressLevel).then(
-                    stressLevel => {
+                    (stressLevel) => {
                       arr = stressLevel ? stressLevel : [];
-                      obj = { reportDate: currentTime, value: data };
+                      obj = {reportDate: currentTime, value: data};
 
                       arr.splice(0, 0, obj);
 
                       UserDefaults.set(
                         stringsUserDefaults.stressLevel,
-                        arr || ""
+                        arr || '',
                       );
-                    }
+                    },
                   );
                 }
 
-                console.log("Tracker Data saved");
+                console.log('Tracker Data saved');
               } else {
                 this.loadingManipulate(false);
               }
@@ -963,12 +973,12 @@ class Home extends Component {
               this.loadingManipulate(false);
             }
           })
-          .catch(error => {
+          .catch((error) => {
             this.loadingManipulate(false);
             console.error(error);
           });
       })
-      .catch(error => {
+      .catch((error) => {
         this.loadingManipulate(false);
         console.error(error);
       });
@@ -977,12 +987,12 @@ class Home extends Component {
   callNotification(header, subText) {
     this.setState({
       notificationHeader: header,
-      notificationSubText: subText
+      notificationSubText: subText,
     });
 
     Animated.timing(this.animatedValueNotification, {
       toValue: 0,
-      duration: 350
+      duration: 350,
     }).start(this.closeNotification());
   }
 
@@ -990,12 +1000,12 @@ class Home extends Component {
     setTimeout(() => {
       Animated.timing(this.animatedValueNotification, {
         toValue: -70,
-        duration: 350
+        duration: 350,
       }).start();
     }, 2000);
 
     setTimeout(() => {
-      this.setState({ showNotification: false });
+      this.setState({showNotification: false});
     }, 2500);
   }
 
@@ -1012,7 +1022,7 @@ class Home extends Component {
       reportModal: false,
       reportViewModal: false,
       trackerModal: false,
-      insuranceModal: false
+      insuranceModal: false,
     });
   }
 
@@ -1025,7 +1035,7 @@ class Home extends Component {
       .then(() => {
         // do stuff
       })
-      .catch(err => {
+      .catch((err) => {
         // handle error
         console.log(err);
       });
@@ -1041,11 +1051,11 @@ class Home extends Component {
     if (isInitFlag === 1) {
       this.setState({
         isLoading: flag,
-        isInitialLoading: flag
+        isInitialLoading: flag,
       });
     } else {
       this.setState({
-        isLoading: flag
+        isLoading: flag,
       });
     }
   }
@@ -1057,18 +1067,18 @@ class Home extends Component {
           reportId: reportId,
           selectedItemModal: undefined,
           selectedSectionArray: [],
-          userName: "",
+          userName: '',
           isOpen: true,
           feedbackModal: false,
           reportModal: false,
           reportViewModal: true,
           trackerModal: false,
           upcomingOrderModal: false,
-          insuranceModal: false
+          insuranceModal: false,
         });
       } else {
         ReportManager.renderReportList(this.state.unreadReports, [], false)
-          .then(response => {
+          .then((response) => {
             var response = response;
             var sectionArray =
               response.response.allReportSortedCatMap[
@@ -1077,13 +1087,13 @@ class Home extends Component {
                 Object.keys(
                   response.response.allReportSortedCatMap[
                     Object.keys(response.response.allReportSortedCatMap)[0]
-                  ]
+                  ],
                 )[0]
               ];
             var selectedItem = sectionArray[0];
             var username = Object.keys(
-              response.response.allReportSortedCatMap
-            )[0].split("$--$")[0];
+              response.response.allReportSortedCatMap,
+            )[0].split('$--$')[0];
 
             this.setState({
               selectedItemModal: selectedItem,
@@ -1095,10 +1105,10 @@ class Home extends Component {
               reportViewModal: true,
               trackerModal: false,
               upcomingOrderModal: false,
-              insuranceModal: false
+              insuranceModal: false,
             });
           })
-          .catch(error => {
+          .catch((error) => {
             setTimeout(() => {
               this.props.navigation.navigate(Routes.reportNav, {});
             }, 50);
@@ -1121,16 +1131,16 @@ class Home extends Component {
       } else {
         if (Global.osVersion) {
           const granted = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
           )
-            .then(granted => {
+            .then((granted) => {
               if (granted === PermissionsAndroid.RESULTS.GRANTED) {
                 this.gotoGeoLocation();
               } else {
-                console.log("Location permission denied");
+                console.log('Location permission denied');
               }
             })
-            .catch(error => {
+            .catch((error) => {
               console.error(error);
             });
         } else {
@@ -1145,27 +1155,27 @@ class Home extends Component {
   gotoGeoLocation() {
     if (Global.iOSPlatform) {
       navigator.geolocation.getCurrentPosition(
-        position => {
+        (position) => {
           this.props.navigation.navigate(Routes.mapScreen, {});
         },
-        error => {
+        (error) => {
           // Works on both iOS and Android
           Alert.alert(
-            "Location Services",
-            "Your Location services are turned off, You need to enable it in order to access this feature",
+            'Location Services',
+            'Your Location services are turned off, You need to enable it in order to access this feature',
             [
-              { text: "Cancel", onPress: () => console.log("Cancel Pressed") },
+              {text: 'Cancel', onPress: () => console.log('Cancel Pressed')},
               {
-                text: "Settings",
+                text: 'Settings',
                 onPress: () => {
-                  Linking.openURL("app-settings:");
-                }
-              }
+                  Linking.openURL('app-settings:');
+                },
+              },
             ],
-            { cancelable: false }
+            {cancelable: false},
           );
         },
-        { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000 }
+        {enableHighAccuracy: false, timeout: 20000, maximumAge: 1000},
       );
     } else {
       var _this = this;
@@ -1173,12 +1183,12 @@ class Home extends Component {
       LocationServicesDialogBox.checkLocationServicesIsEnabled({
         message:
           "<h2>Use Location ?</h2>This app wants to change your device settings:<br/><br/>Use GPS, Wi-Fi, and cell network for location<br/><br/><a href='#'>Learn more</a>",
-        ok: "YES",
-        cancel: "NO",
+        ok: 'YES',
+        cancel: 'NO',
         enableHighAccuracy: true, // true => GPS AND NETWORK PROVIDER, false => ONLY GPS PROVIDER
-        showDialog: true // false => Opens the Location access page directly
+        showDialog: true, // false => Opens the Location access page directly
       })
-        .then(success => {
+        .then((success) => {
           if (success.enabled || success.alreadyEnabled) {
             setTimeout(() => {
               _this.props.navigation.navigate(Routes.mapScreen, {});
@@ -1186,7 +1196,7 @@ class Home extends Component {
           }
           console.log(success); // success => {alreadyEnabled: false, enabled: true, status: "enabled"}
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error.message); // error.message => "disabled"
         });
     }
@@ -1201,7 +1211,7 @@ class Home extends Component {
       reportViewModal: false,
       trackerModal: true,
       upcomingOrderModal: false,
-      insuranceModal: false
+      insuranceModal: false,
     });
   }
 
@@ -1211,13 +1221,13 @@ class Home extends Component {
 
   clearCard() {
     this.setState({
-      isFeedbackFlag: false
+      isFeedbackFlag: false,
     });
   }
 
   clearCard1() {
     this.setState({
-      takePhlebotomistReview: false
+      takePhlebotomistReview: false,
     });
   }
 
@@ -1226,135 +1236,135 @@ class Home extends Component {
 
     time = moment().format();
     currentTime = String(
-      moment(time)
-        .utc()
-        .format(Global.LTHDateFormatMoment) + "Z"
+      moment(time).utc().format(Global.LTHDateFormatMoment) + 'Z',
     );
 
-    UserDefaults.get(stringsUserDefaults.onMedications_date).then(date => {
+    UserDefaults.get(stringsUserDefaults.onMedications_date).then((date) => {
       if (date) {
-        if (moment(currentTime).diff(date, "months") >= 1) {
+        if (moment(currentTime).diff(date, 'months') >= 1) {
           temp = 1;
-          this.setState({ demographyCount: 5 });
+          this.setState({demographyCount: 5});
         }
       } else {
         temp = 1;
-        this.setState({ demographyCount: 5 });
+        this.setState({demographyCount: 5});
       }
     });
 
-    UserDefaults.get(stringsUserDefaults.hasInsurance_date).then(date => {
+    UserDefaults.get(stringsUserDefaults.hasInsurance_date).then((date) => {
       if (date) {
-        if (moment(currentTime).diff(date, "months") >= 1) {
+        if (moment(currentTime).diff(date, 'months') >= 1) {
           temp = 1;
-          this.setState({ demographyCount: 4 });
+          this.setState({demographyCount: 4});
         }
       } else {
         temp = 1;
-        this.setState({ demographyCount: 4 });
+        this.setState({demographyCount: 4});
       }
     });
 
-    UserDefaults.get(stringsUserDefaults.stressLevel).then(stressLevel => {
+    UserDefaults.get(stringsUserDefaults.stressLevel).then((stressLevel) => {
       if (stressLevel) {
         if (stressLevel.length > 0) {
           if (
-            moment(currentTime).diff(stressLevel[0].reportDate, "months") >= 1
+            moment(currentTime).diff(stressLevel[0].reportDate, 'months') >= 1
           ) {
             temp = 1;
-            this.setState({ demographyCount: 3 });
+            this.setState({demographyCount: 3});
           }
         } else {
           temp = 1;
-          this.setState({ demographyCount: 3 });
+          this.setState({demographyCount: 3});
         }
       }
     });
 
     UserDefaults.get(stringsUserDefaults.activenessLevel).then(
-      activenessLevel => {
+      (activenessLevel) => {
         if (activenessLevel) {
           if (activenessLevel.length > 0) {
             if (
               moment(currentTime).diff(
                 activenessLevel[0].reportDate,
-                "months"
+                'months',
               ) >= 1
             ) {
               temp = 1;
-              this.setState({ demographyCount: 2 });
+              this.setState({demographyCount: 2});
             }
           } else {
             temp = 1;
-            this.setState({ demographyCount: 2 });
+            this.setState({demographyCount: 2});
           }
         }
-      }
+      },
     );
 
     UserDefaults.get(stringsUserDefaults.frequencyOfHealthCheckup_date).then(
-      date => {
+      (date) => {
         if (date) {
-          if (moment(currentTime).diff(date, "months") >= 1) {
+          if (moment(currentTime).diff(date, 'months') >= 1) {
             temp = 1;
-            this.setState({ demographyCount: 1 });
+            this.setState({demographyCount: 1});
           }
         } else {
           temp = 1;
-          this.setState({ demographyCount: 1 });
+          this.setState({demographyCount: 1});
         }
-      }
+      },
     );
 
     if (temp === 0) {
       this.setState({
-        demographyCount: 6
+        demographyCount: 6,
       });
     }
 
     if (temp === 1) {
       this.setState({
-        demographyCount: 1
+        demographyCount: 1,
       });
     }
 
     try {
       UserDefaults.get(stringsUserDefaults.user)
-        .then(user => {
+        .then((user) => {
           if (user) {
             this.setState({
               processing: 0,
-              user: user || "",
+              user: user || '',
               user_id: user.user.id || 0,
               userDetailsId_id: user.id || 0,
-              email: user.user.email || "",
-              contact: user.contact || ""
+              email: user.user.email || '',
+              contact: user.contact || '',
             });
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(error);
         });
 
       this.getTipCount();
 
       UserDefaults.get(stringsUserDefaults.userToken)
-        .then(token => {
-          let params = "token=" + token || "";
+        .then((token) => {
+          let params = 'token=' + token || '';
           var _this = this;
-          NetworkRequest(_this, "POST", URLs.dashboardLoadingURL, params)
-            .then(result => {
+            this.getLabDetails('userToken=' + token);
+
+          NetworkRequest(_this, 'POST', URLs.dashboardLoadingURL, params)
+            .then((result) => {
               if (result.success) {
                 this.animate();
                 if ((result.response.code || 0) === 200) {
                   if (result.response.currency) {
                     this.props.setCurrency(
-                      this.convertUnicode(result.response.currency)
+                      this.convertUnicode(result.response.currency),
                     );
                   }
                   if (result.response.isShowBooking) {
                     this.setState({
-                      isShowBooking: result.response.isShowBooking
+                      isShowBooking: result.response.isShowBooking,
                     });
                   }
 
@@ -1365,10 +1375,10 @@ class Home extends Component {
                     if (result.response.unreadReports.length > 0) {
                       // this.props.dispatch(setUnreadFlag(1))
                       this.props.setUnreadFlag(
-                        result.response.unreadReports.length
+                        result.response.unreadReports.length,
                       );
 
-                      var labName = "";
+                      var labName = '';
                       try {
                         labName =
                           result.response.unreadReports[0].labForId.labName;
@@ -1378,18 +1388,18 @@ class Home extends Component {
                       this.setState({
                         isUnreadReportFlag: true,
                         unreadLab: labName,
-                        unreadReports: result.response.unreadReports
+                        unreadReports: result.response.unreadReports,
                       });
                     } else {
                       this.setState({
-                        isUnreadReportFlag: false
+                        isUnreadReportFlag: false,
                       });
                     }
                   }
 
                   if (result.response.labName) {
                     try {
-                      var labName = "";
+                      var labName = '';
                       try {
                         labName = result.response.labName;
                       } catch (error) {
@@ -1397,7 +1407,7 @@ class Home extends Component {
                       }
 
                       Intercom.updateUser({
-                        recently_visited_lab: labName
+                        recently_visited_lab: labName,
                       });
                     } catch (error) {
                       console.log(error);
@@ -1408,14 +1418,15 @@ class Home extends Component {
                     if (result.response.getFeedbackData.length > 0) {
                       this.checkFeedBack(
                         result.response.getFeedbackData[0],
-                        token
+                        token,
                       );
                     }
                   }
 
                   if (result.response.upcomingAppointments) {
                     this.setState({
-                      upcomingAppointments: result.response.upcomingAppointments
+                      upcomingAppointments:
+                        result.response.upcomingAppointments,
                     });
 
                     // }
@@ -1424,7 +1435,7 @@ class Home extends Component {
                   if (result.response.upcomingHomeCollection) {
                     this.setState({
                       upcomingHomeCollection:
-                        result.response.upcomingHomeCollection
+                        result.response.upcomingHomeCollection,
                     });
                   }
 
@@ -1448,11 +1459,11 @@ class Home extends Component {
                       if (favoriteTrackers.group.buckets) {
                         if (favoriteTrackers.group.buckets.length > 0) {
                           this.parsePinnedTrackers(
-                            favoriteTrackers.group.buckets
+                            favoriteTrackers.group.buckets,
                           );
                         } else {
                           this.setState({
-                            pinnedTrackers: []
+                            pinnedTrackers: [],
                           });
                         }
                       }
@@ -1467,12 +1478,12 @@ class Home extends Component {
                 this.loadingManipulate(false, 1);
               }
             })
-            .catch(error => {
+            .catch((error) => {
               this.loadingManipulate(false, 1);
               console.error(error);
             });
         })
-        .catch(error => {
+        .catch((error) => {
           this.loadingManipulate(false, 1);
           console.error(error);
         });
@@ -1487,7 +1498,7 @@ class Home extends Component {
   parsePinnedTrackers(buckets: Array) {
     var pinnedTrackers = [];
     var dictionaryArray = [];
-    buckets.forEach(valInData => {
+    buckets.forEach((valInData) => {
       try {
         var _source = valInData.group_docs.hits.hits[0]._source;
         pinnedTrackers.push({
@@ -1496,7 +1507,7 @@ class Home extends Component {
           highlightedDate: _source.reportDate,
           currentParameter: _source.dictionaryName,
           icon: _source.categoryIcon,
-          dictionaryId: _source.dictionaryId
+          dictionaryId: _source.dictionaryId,
         });
         dictionaryArray.push(_source.dictionaryId);
       } catch (error) {
@@ -1510,7 +1521,7 @@ class Home extends Component {
     this.props.setList(pinnedTrackers);
 
     this.setState({
-      pinnedTrackers: pinnedTrackers
+      pinnedTrackers: pinnedTrackers,
     });
   }
 
@@ -1520,7 +1531,7 @@ class Home extends Component {
       takePhlebotomistReview: phlebotomistReview.takePhlebotomistReview,
       homeCollectionId: phlebotomistReview.homeCollectionId,
       phlebotomistName: phlebotomistReview.phlebotomistName,
-      labNameHC: phlebotomistReview.labNameHC
+      labNameHC: phlebotomistReview.labNameHC,
     });
   }
 
@@ -1555,10 +1566,10 @@ class Home extends Component {
 
   getTipCount() {
     UserDefaults.get(stringsUserDefaults.tipCount)
-      .then(tipCount => {
+      .then((tipCount) => {
         if (tipCount) {
           this.setState({
-            tipCount: tipCount || 1
+            tipCount: tipCount || 1,
           });
           tipCount += 1;
           if (tipCount === 5) {
@@ -1568,7 +1579,7 @@ class Home extends Component {
           }
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
   }
@@ -1577,7 +1588,7 @@ class Home extends Component {
     var tipCount = this.state.tipCount;
     tipCount += 1;
     this.setState({
-      tipCount: tipCount || 1
+      tipCount: tipCount || 1,
     });
     if (tipCount === 5) {
       UserDefaults.set(stringsUserDefaults.tipCount, 1);
@@ -1593,30 +1604,30 @@ class Home extends Component {
       var billId = feedbackData.billId;
 
       let params =
-        "userToken=" +
-        (token || "") +
-        "&labId=" +
-        (labId || "") +
-        "&billId=" +
-        (billId || "");
+        'userToken=' +
+        (token || '') +
+        '&labId=' +
+        (labId || '') +
+        '&billId=' +
+        (billId || '');
 
       var _this = this;
-      NetworkRequest(_this, "POST", URLs.checkFeedbackURL, params)
-        .then(result => {
+      NetworkRequest(_this, 'POST', URLs.checkFeedbackURL, params)
+        .then((result) => {
           if (result.success) {
             if ((result.response.code || 0) === 200) {
               this.setState({
                 isFeedbackFlag: true,
                 labId: labId,
                 labName: labName,
-                billId: billId
+                billId: billId,
               });
             } else if ((result.response.code || 0) === 302) {
             } else {
             }
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(error);
         });
     } catch (error) {
@@ -1627,11 +1638,11 @@ class Home extends Component {
   async afterResponsePending(pendingReports) {
     var response = {};
     ReportManager.renderReportList(pendingReports, [], true)
-      .then(response => {
+      .then((response) => {
         var response = response;
         this.setPendingReports(response);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
   }
@@ -1649,7 +1660,7 @@ class Home extends Component {
             pendingArray.push(pendingMap[keys][inner_key][i]);
             billMap[pendingMap[keys][inner_key][i].billId.id] = {
               pendingReports: pendingArray,
-              inner_key: inner_key
+              inner_key: inner_key,
             };
             // {
             //                                                       pendingReports : pendingArray,
@@ -1669,8 +1680,8 @@ class Home extends Component {
 
         for (key_bill in billMap) {
           var maxVal = 0;
-          var reportDate = "";
-          var labName = "";
+          var reportDate = '';
+          var labName = '';
           var labId = 0;
           var amount = 0;
           var billId = 0;
@@ -1680,8 +1691,8 @@ class Home extends Component {
               maxVal = billMap[key_bill].pendingReports[i].reportStatus;
             }
             try {
-              if (reportDate === "" || labId === 0 || amount === 0) {
-                var innerArray = billMap[key_bill].inner_key.split("$--$");
+              if (reportDate === '' || labId === 0 || amount === 0) {
+                var innerArray = billMap[key_bill].inner_key.split('$--$');
                 reportDate = innerArray[0];
                 labName = innerArray[1];
                 if (billMap[key_bill].pendingReports[i].labForId) {
@@ -1707,7 +1718,7 @@ class Home extends Component {
             labId: labId,
             reportDate: reportDate,
             amount: amount,
-            billId: billId
+            billId: billId,
           });
         }
       }
@@ -1724,13 +1735,13 @@ class Home extends Component {
         pendingReports: pendingReports,
         isPendingFlag: true,
         isLoading: false,
-        isInitialLoading: false
+        isInitialLoading: false,
       });
     } else {
       this.setState({
         isPendingFlag: false,
         isLoading: false,
-        isInitialLoading: false
+        isInitialLoading: false,
       });
     }
   }
@@ -1744,13 +1755,13 @@ class Home extends Component {
     return (
       s4() +
       s4() +
-      "-" +
+      '-' +
       s4() +
-      "-" +
+      '-' +
       s4() +
-      "-" +
+      '-' +
       s4() +
-      "-" +
+      '-' +
       s4() +
       s4() +
       s4()
@@ -1758,47 +1769,47 @@ class Home extends Component {
   }
 
   async paymentCheck(isComplete, isFailed, amount, labId, labName) {
-    var timeStamp = moment().format(Global.LTHDateFormatMoment) + "Z";
+    var timeStamp = moment().format(Global.LTHDateFormatMoment) + 'Z';
     UserDefaults.get(stringsUserDefaults.userToken)
-      .then(token => {
+      .then((token) => {
         let params =
-          "token=" +
-          (token || "") +
-          "&id=" +
-          (this.state.uuid || "") +
-          "&user_id=" +
-          (this.state.user_id || "") +
-          "&userDetailsId_id=" +
-          (this.state.userDetailsId_id || "") +
-          "&amount=" +
+          'token=' +
+          (token || '') +
+          '&id=' +
+          (this.state.uuid || '') +
+          '&user_id=' +
+          (this.state.user_id || '') +
+          '&userDetailsId_id=' +
+          (this.state.userDetailsId_id || '') +
+          '&amount=' +
           (amount || 0) +
-          "&labId=" +
+          '&labId=' +
           (labId || 0) +
-          "&labName=" +
-          (labName || "") +
-          "&source=" +
-          (Global.iOSPlatform ? "iOS" : "Android") +
-          "&isReport=" +
+          '&labName=' +
+          (labName || '') +
+          '&source=' +
+          (Global.iOSPlatform ? 'iOS' : 'Android') +
+          '&isReport=' +
           1 +
-          "&isAppointment=" +
+          '&isAppointment=' +
           0 +
-          "&isHomeCollection=" +
+          '&isHomeCollection=' +
           0 +
-          "&isComplete=" +
+          '&isComplete=' +
           isComplete +
-          "&isFailed=" +
+          '&isFailed=' +
           isFailed +
-          "&activityDate=" +
-          (timeStamp || "");
+          '&activityDate=' +
+          (timeStamp || '');
 
         var _this = this;
-        NetworkRequest(_this, "POST", URLs.trackPayments, params)
-          .then(result => {})
-          .catch(error => {
+        NetworkRequest(_this, 'POST', URLs.trackPayments, params)
+          .then((result) => {})
+          .catch((error) => {
             console.error(error);
           });
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
   }
@@ -1808,10 +1819,10 @@ class Home extends Component {
     var row = [];
     var count = 0;
 
-    pendingReports.forEach(item => {
-      var reportStatus = "";
-      var reportDate = "";
-      var labName = "";
+    pendingReports.forEach((item) => {
+      var reportStatus = '';
+      var reportDate = '';
+      var labName = '';
       var countryCode = item.pendingReports[0].labForId.countryCode
         ? item.pendingReports[0].labForId.countryCode
         : 91;
@@ -1832,9 +1843,9 @@ class Home extends Component {
       }
       row.push(
         <Animated.View
-          key={count + "_pendingReport"}
+          key={count + '_pendingReport'}
           style={[
-            { transform: [{ scale: this.state.springVal }] },
+            {transform: [{scale: this.state.springVal}]},
             {
               borderRadius: 8,
               marginLeft: 17,
@@ -1843,11 +1854,10 @@ class Home extends Component {
               marginBottom: 8,
               width: Global.screenWidth - 34,
               elevation: 6,
-              backgroundColor: "white"
+              backgroundColor: 'white',
             },
-            CommonStyles.commonShadow
-          ]}
-        >
+            CommonStyles.commonShadow,
+          ]}>
           <Ripple
             rippleOpacity={0.2}
             onPressIn={this.spring1.bind(this)}
@@ -1861,21 +1871,19 @@ class Home extends Component {
                 reportViewModal: false,
                 trackerModal: false,
                 upcomingOrderModal: false,
-                insuranceModal: false
+                insuranceModal: false,
               });
             }}
-            style={{ flex: 1, padding: 16 }}
-          >
-            <View style={{ flexDirection: "row", flex: 1 }}>
+            style={{flex: 1, padding: 16}}>
+            <View style={{flexDirection: 'row', flex: 1}}>
               <Image
                 source={Images.imageChemistry}
-                style={{ height: 35, width: 35 }}
+                style={{height: 35, width: 35}}
               />
               <Text
-                style={[CommonStyles.common_header, { paddingLeft: 16 }]}
+                style={[CommonStyles.common_header, {paddingLeft: 16}]}
                 numberOfLines={1}
-                ellipsizeMode={"tail"}
-              >
+                ellipsizeMode={'tail'}>
                 {reportStatus}
               </Text>
             </View>
@@ -1883,46 +1891,42 @@ class Home extends Component {
             {item.amount === 0 ? (
               <View
                 style={{
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  padding: 12
-                }}
-              ></View>
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  padding: 12,
+                }}></View>
             ) : null}
 
-            <View style={{ alignItems: "center" }}>
+            <View style={{alignItems: 'center'}}>
               <Text
                 style={{
-                  fontFamily: "Arial",
+                  fontFamily: 'Arial',
                   paddingBottom: 4,
                   paddingTop: 8,
                   fontSize: 17,
-                  color: Color._54
-                }}
-              >
+                  color: Color._54,
+                }}>
                 {item.labName}
               </Text>
               <Text
                 style={{
-                  fontFamily: "Arial",
+                  fontFamily: 'Arial',
                   paddingBottom: 10,
                   fontSize: 14,
-                  color: Color._72
-                }}
-              >
+                  color: Color._72,
+                }}>
                 {item.reportDate}
               </Text>
             </View>
 
             <View
               style={{
-                justifyContent: "center",
+                justifyContent: 'center',
                 marginLeft: 16,
                 marginRight: 16,
-                marginBottom: 14
-              }}
-            >
-              <View style={{ flex: 1, flexDirection: "row" }}>
+                marginBottom: 14,
+              }}>
+              <View style={{flex: 1, flexDirection: 'row'}}>
                 <View
                   style={{
                     backgroundColor:
@@ -1931,10 +1935,9 @@ class Home extends Component {
                         : Color.pending_color_neutral,
                     borderRadius: 70,
                     height: 12,
-                    width: 12
-                  }}
-                ></View>
-                <View style={{ flex: 1, padding: 3 }}></View>
+                    width: 12,
+                  }}></View>
+                <View style={{flex: 1, padding: 3}}></View>
                 <View
                   style={{
                     backgroundColor:
@@ -1943,10 +1946,9 @@ class Home extends Component {
                         : Color.pending_color_neutral,
                     borderRadius: 70,
                     height: 12,
-                    width: 12
-                  }}
-                ></View>
-                <View style={{ flex: 1, padding: 3 }}></View>
+                    width: 12,
+                  }}></View>
+                <View style={{flex: 1, padding: 3}}></View>
                 <View
                   style={{
                     backgroundColor:
@@ -1955,10 +1957,9 @@ class Home extends Component {
                         : Color.pending_color_neutral,
                     borderRadius: 70,
                     height: 12,
-                    width: 12
-                  }}
-                ></View>
-                <View style={{ flex: 1, padding: 3 }}></View>
+                    width: 12,
+                  }}></View>
+                <View style={{flex: 1, padding: 3}}></View>
                 <View
                   style={{
                     backgroundColor:
@@ -1967,75 +1968,67 @@ class Home extends Component {
                         : Color.pending_color_neutral,
                     borderRadius: 70,
                     height: 12,
-                    width: 12
-                  }}
-                ></View>
+                    width: 12,
+                  }}></View>
               </View>
               <View
                 style={{
                   width: Global.screenWidth - 98,
                   backgroundColor: Color.pending_color_neutral,
                   padding: 1.7,
-                  alignItems: "center",
+                  alignItems: 'center',
                   borderRadius: 70,
-                  position: "absolute"
-                }}
-              ></View>
+                  position: 'absolute',
+                }}></View>
               <View
                 style={{
                   width: (Global.screenWidth - 98) * percentage,
                   backgroundColor: Color.pending_selected_color,
                   padding: 1.7,
-                  alignItems: "center",
+                  alignItems: 'center',
                   borderRadius: 70,
-                  position: "absolute"
-                }}
-              ></View>
+                  position: 'absolute',
+                }}></View>
             </View>
 
             {item.amount !== 0 ? (
               <View
                 style={{
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center"
-                }}
-              >
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
                 <Text
                   style={{
-                    fontFamily: "Arial",
-                    color: "#FDA53F",
-                    fontWeight: "500"
-                  }}
-                >
+                    fontFamily: 'Arial',
+                    color: '#FDA53F',
+                    fontWeight: '500',
+                  }}>
                   PAYMENT DUE
                 </Text>
                 <Text
                   style={{
-                    fontFamily: "Arial",
+                    fontFamily: 'Arial',
                     fontSize: 18,
                     paddingLeft: 20,
-                    color: Color._36
-                  }}
-                >
+                    color: Color._36,
+                  }}>
                   {this.props.currency.currency} {item.amount}
                 </Text>
               </View>
             ) : (
               <View
-                style={{ flexDirection: "row", justifyContent: "center" }}
-              ></View>
+                style={{flexDirection: 'row', justifyContent: 'center'}}></View>
             )}
           </Ripple>
           <View
             style={{
-              flexDirection: "row",
-              justifyContent: "flex-end",
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
               flex: 1,
               paddingLeft: 16,
-              paddingRight: 16
-            }}
-          >
+              paddingRight: 16,
+            }}>
             <Ripple
               rippleOpacity={0.2}
               onPressIn={this.spring1.bind(this)}
@@ -2049,78 +2042,73 @@ class Home extends Component {
                   reportViewModal: false,
                   trackerModal: false,
                   upcomingOrderModal: false,
-                  insuranceModal: false
+                  insuranceModal: false,
                 });
               }}
-              style={{ paddingBottom: 16, paddingLeft: 8, paddingTop: 12 }}
-            >
+              style={{paddingBottom: 16, paddingLeft: 8, paddingTop: 12}}>
               <Text
                 style={{
-                  fontFamily: "Arial",
-                  fontWeight: "500",
+                  fontFamily: 'Arial',
+                  fontWeight: '500',
                   color: Color._9F,
-                  marginRight: 8
-                }}
-              >
+                  marginRight: 8,
+                }}>
                 VIEW ORDER
               </Text>
             </Ripple>
-            <View style={{ flex: 1 }}></View>
+            <View style={{flex: 1}}></View>
             {item.amount !== 0 ? (
               <TouchableOpacity
                 activeOpacity={1}
-                opacityColor={"red"}
+                opacityColor={'red'}
                 onPress={() => {
                   this.paymentCheck(
                     0,
                     0,
                     item.amount,
                     item.labId,
-                    item.labName
+                    item.labName,
                   );
                   this.setState({
                     razorpay_item: item,
-                    isLoading: true
+                    isLoading: true,
                   });
                   setTimeout(() => {
                     this.getOrderId();
                   }, 100);
-                }}
-              >
+                }}>
                 {countryCode == 91 ? (
                   <Text
                     style={{
-                      fontFamily: "Arial",
-                      textAlign: "right",
+                      fontFamily: 'Arial',
+                      textAlign: 'right',
                       paddingRight: 8,
                       paddingBottom: 16,
                       paddingTop: 12,
-                      fontWeight: "700",
-                      color: Color.theme_blue
-                    }}
-                  >
+                      fontWeight: '700',
+                      color: Color.theme_blue,
+                    }}>
                     PAY NOW
                   </Text>
                 ) : null}
               </TouchableOpacity>
             ) : null}
           </View>
-        </Animated.View>
+        </Animated.View>,
       );
       count++;
     });
 
     const anim = this.animatedValue.interpolate({
       inputRange: [0.5, 3],
-      outputRange: [-100, 400]
+      outputRange: [-100, 400],
     });
     return (
-      <Animated.View style={{ bottom: anim }}>
+      <Animated.View style={{bottom: anim}}>
         <ScrollView
           pagingEnabled={true}
           horizontal={true}
-          showsHorizontalScrollIndicator={false}
-        >
+          showsHorizontalScrollIndicator={false}>
           {row}
         </ScrollView>
       </Animated.View>
@@ -2129,37 +2117,37 @@ class Home extends Component {
 
   async paymentSuccess(paymentId, billId, order_id) {
     UserDefaults.get(stringsUserDefaults.userToken)
-      .then(token => {
+      .then((token) => {
         let params =
-          "token=" +
-          (token || "") +
-          "&paymentId=" +
-          (paymentId || "") +
-          "&order_id=" +
-          (order_id || "") +
-          "&billId=" +
+          'token=' +
+          (token || '') +
+          '&paymentId=' +
+          (paymentId || '') +
+          '&order_id=' +
+          (order_id || '') +
+          '&billId=' +
           (billId || 0);
         var _this = this;
-        NetworkRequest(_this, "POST", URLs.razorpayReportCaptureApp, params)
-          .then(result => {
+        NetworkRequest(_this, 'POST', URLs.razorpayReportCaptureApp, params)
+          .then((result) => {
             if (result.success) {
               if ((result.response.code || 0) === 200) {
                 this.getData();
-                console.log("SUCCESS");
+                console.log('SUCCESS');
               } else if ((result.response.code || 0) === 500) {
-                console.log("FAILURE");
+                console.log('FAILURE');
                 this.loadingManipulate(false);
               } else {
                 this.loadingManipulate(false);
               }
             }
           })
-          .catch(error => {
+          .catch((error) => {
             this.loadingManipulate(false);
             console.error(error);
           });
       })
-      .catch(error => {
+      .catch((error) => {
         this.loadingManipulate(false);
         console.error(error);
       });
@@ -2176,12 +2164,12 @@ class Home extends Component {
       collectingPersonId: collectingPersonId,
       homecollectionId: homecollectionId,
       homeFeedback: true,
-      insuranceModal: false
+      insuranceModal: false,
     });
   }
 
   getGreetingTime(m) {
-    var g = ""; //return g
+    var g = ''; //return g
 
     if (!m || !m.isValid()) {
       return;
@@ -2189,14 +2177,14 @@ class Home extends Component {
 
     var split_afternoon = 12; //24hr time to split the afternoon
     var split_evening = 17; //24hr time to split the evening
-    var currentHour = parseFloat(m.format("HH"));
+    var currentHour = parseFloat(m.format('HH'));
 
     if (currentHour >= split_afternoon && currentHour <= split_evening) {
-      g = "Good Afternoon,";
+      g = 'Good Afternoon,';
     } else if (currentHour >= split_evening) {
-      g = "Good Evening,";
+      g = 'Good Evening,';
     } else {
-      g = "Good Morning,";
+      g = 'Good Morning,';
     }
 
     return g;
@@ -2204,7 +2192,7 @@ class Home extends Component {
 
   onClose() {
     this.closeModal();
-    console.log("Modal just closed");
+    console.log('Modal just closed');
   }
   onOpen() {
     // if(this.state.reportModal){
@@ -2212,15 +2200,15 @@ class Home extends Component {
     //     swipeToClose: false
     //   })
     // }
-    console.log("Modal just openned");
+    console.log('Modal just openned');
   }
   onClosingState(state) {
-    console.log("the open/close of the swipeToClose just changed");
+    console.log('the open/close of the swipeToClose just changed');
   }
 
   renderClose(flag) {
     this.setState({
-      swipeToClose: flag
+      swipeToClose: flag,
     });
   }
 
@@ -2233,19 +2221,19 @@ class Home extends Component {
       trackerModal: false,
       isScrollable: false,
       swipeToClose: true,
-      homeFeedback: false
+      homeFeedback: false,
     });
   }
 
   convertUnicode(input) {
-    return input.replace(/\\u(\w\w\w\w)/g, function(a, b) {
+    return input.replace(/\\u(\w\w\w\w)/g, function (a, b) {
       var charcode = parseInt(b, 16);
       return String.fromCharCode(charcode);
     });
   }
 
   onNotificationOpened(notification) {
-    console.log("onNotificationOpened: ", notification);
+    console.log('onNotificationOpened: ', notification);
     if (!Global.iOSPlatform) {
       if (
         notification.data.category === stringsNotifications.GCMCAT_NEW_REPORT
@@ -2270,7 +2258,7 @@ class Home extends Component {
       ) {
         this.gotoFeedback(
           notification.data.collectingPersonId,
-          notification.data.homecollectionId
+          notification.data.homecollectionId,
         );
       }
     } else {
@@ -2297,7 +2285,7 @@ class Home extends Component {
       ) {
         this.gotoFeedback(
           notification._data.collectingPersonId,
-          notification._data.homecollectionId
+          notification._data.homecollectionId,
         );
       }
       try {
@@ -2347,7 +2335,7 @@ class Home extends Component {
     ) {
       this.gotoFeedback(
         notification._data.collectingPersonId,
-        notification._data.homecollectionId
+        notification._data.homecollectionId,
       );
     }
   }
@@ -2363,7 +2351,7 @@ class Home extends Component {
     //  // userInfo: notification.getData()
     // });
 
-    console.log("Notification from Home", notification);
+    console.log('Notification from Home', notification);
     //  PushNotificationIOS.scheduleLocalNotification({
     //     fireDate:moment(),
     //     alertBody: "Local notificiation!",
@@ -2400,7 +2388,7 @@ class Home extends Component {
 
   setSwipe(flag) {
     this.setState({
-      swipeToClose: flag
+      swipeToClose: flag,
     });
   }
 
@@ -2410,55 +2398,55 @@ class Home extends Component {
 
   setScroll(flag) {
     this.setState({
-      isScrollable: flag
+      isScrollable: flag,
     });
   }
 
   getRoute() {
     if (Global.iOSPlatform) {
       navigator.geolocation.getCurrentPosition(
-        position => {
+        (position) => {
           var labLocation = this.state.upcomingAppointments[0].labForId
             .location;
-          let labArray = labLocation.split(",");
+          let labArray = labLocation.split(',');
           let labLati = labArray[0];
           let labLongi = labArray[1];
 
           const data = {
             source: {
               latitude: position.coords.latitude,
-              longitude: position.coords.longitude
+              longitude: position.coords.longitude,
             },
             destination: {
               latitude: parseFloat(labLati),
-              longitude: parseFloat(labLongi)
+              longitude: parseFloat(labLongi),
             },
             params: [
               {
-                key: "dirflg",
-                value: "c"
-              }
-            ]
+                key: 'dirflg',
+                value: 'c',
+              },
+            ],
           };
           getDirections(data);
         },
-        error => {
+        (error) => {
           Alert.alert(
-            "Location Services",
-            "Your Location services are turned off, You need to enable it in order to access this feature",
+            'Location Services',
+            'Your Location services are turned off, You need to enable it in order to access this feature',
             [
-              { text: "Cancel", onPress: () => console.log("Cancel Pressed") },
+              {text: 'Cancel', onPress: () => console.log('Cancel Pressed')},
               {
-                text: "Settings",
+                text: 'Settings',
                 onPress: () => {
-                  Linking.openURL("app-settings:");
-                }
-              }
+                  Linking.openURL('app-settings:');
+                },
+              },
             ],
-            { cancelable: false }
+            {cancelable: false},
           );
         },
-        { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000 }
+        {enableHighAccuracy: false, timeout: 20000, maximumAge: 1000},
       );
     } else {
       var _this = this;
@@ -2466,12 +2454,12 @@ class Home extends Component {
       LocationServicesDialogBox.checkLocationServicesIsEnabled({
         message:
           "<h2>Use Location ?</h2>This app wants to change your device settings:<br/><br/>Use GPS, Wi-Fi, and cell network for location<br/><br/><a href='#'>Learn more</a>",
-        ok: "YES",
-        cancel: "NO",
+        ok: 'YES',
+        cancel: 'NO',
         enableHighAccuracy: true, // true => GPS AND NETWORK PROVIDER, false => ONLY GPS PROVIDER
-        showDialog: true // false => Opens the Location access page directly
+        showDialog: true, // false => Opens the Location access page directly
       })
-        .then(success => {
+        .then((success) => {
           if (success.enabled || success.alreadyEnabled) {
             // setTimeout(() => {
             //   _this.props.navigation.navigate(Routes.mapScreen, {
@@ -2479,56 +2467,56 @@ class Home extends Component {
             //   })
             // },100)
             navigator.geolocation.getCurrentPosition(
-              position => {
+              (position) => {
                 var labLocation = this.state.upcomingAppointments[0].labForId
                   .location;
-                let labArray = labLocation.split(",");
+                let labArray = labLocation.split(',');
                 let labLati = labArray[0];
                 let labLongi = labArray[1];
 
                 const data = {
                   source: {
                     latitude: position.coords.latitude,
-                    longitude: position.coords.longitude
+                    longitude: position.coords.longitude,
                   },
                   destination: {
                     latitude: parseFloat(labLati),
-                    longitude: parseFloat(labLongi)
+                    longitude: parseFloat(labLongi),
                   },
                   params: [
                     {
-                      key: "dirflg",
-                      value: "c"
-                    }
-                  ]
+                      key: 'dirflg',
+                      value: 'c',
+                    },
+                  ],
                 };
                 getDirections(data);
               },
-              error => {
+              (error) => {
                 Alert.alert(
-                  "Location Services",
-                  "Your Location services are turned off, You need to enable it in order to access this feature",
+                  'Location Services',
+                  'Your Location services are turned off, You need to enable it in order to access this feature',
                   [
                     {
-                      text: "Cancel",
-                      onPress: () => console.log("Cancel Pressed")
+                      text: 'Cancel',
+                      onPress: () => console.log('Cancel Pressed'),
                     },
                     {
-                      text: "Settings",
+                      text: 'Settings',
                       onPress: () => {
-                        Linking.openURL("app-settings:");
-                      }
-                    }
+                        Linking.openURL('app-settings:');
+                      },
+                    },
                   ],
-                  { cancelable: false }
+                  {cancelable: false},
                 );
               },
-              { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+              {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
             );
           }
           console.log(success); // success => {alreadyEnabled: false, enabled: true, status: "enabled"}
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error.message); // error.message => "disabled"
         });
     }
@@ -2541,16 +2529,16 @@ class Home extends Component {
       } else {
         if (Global.osVersion) {
           const granted = PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
           )
-            .then(granted => {
+            .then((granted) => {
               if (granted === PermissionsAndroid.RESULTS.GRANTED) {
                 this.getRoute();
               } else {
-                console.log("Location permission denied");
+                console.log('Location permission denied');
               }
             })
-            .catch(error => {
+            .catch((error) => {
               console.error(error);
             });
         } else {
@@ -2571,48 +2559,48 @@ class Home extends Component {
       reportViewModal: false,
       trackerModal: false,
       upcomingOrderModal: false,
-      insuranceModal: false
+      insuranceModal: false,
     });
   }
 
   openRazorPay(order_id) {
     var item = this.state.razorpay_item;
     console.log(item);
-    var timeStamp = moment().format(Global.LTHDateFormatMoment) + "Z";
+    var timeStamp = moment().format(Global.LTHDateFormatMoment) + 'Z';
     var options = {
-      description: "",
+      description: '',
       image: URLs.getLivehealthLogo,
       order_id: order_id,
-      currency: "INR",
+      currency: 'INR',
       key: stringRazorPay.razorpayKey,
       // key: 'rzp_test_MdhWQeMJTkdfz0',
-      amount: item.amount * 100 + "",
+      amount: item.amount * 100 + '',
       name: item.labName,
       notes: {
         billId: item.billId || 0,
-        isProvider: "0",
-        id: this.state.uuid || "",
-        user_id: this.state.user_id || "",
-        userDetailsId_id: this.state.userDetailsId_id || "",
+        isProvider: '0',
+        id: this.state.uuid || '',
+        user_id: this.state.user_id || '',
+        userDetailsId_id: this.state.userDetailsId_id || '',
         amount: item.amount || 0,
         labId: item.labId || 0,
-        labName: item.labName || "",
-        source: Global.iOSPlatform ? "iOS" : "Android",
+        labName: item.labName || '',
+        source: Global.iOSPlatform ? 'iOS' : 'Android',
         isReport: 1,
         isAppointment: 0,
         isHomeCollection: 0,
         isComplete: 0,
         isFailed: 0,
-        activityDate: timeStamp || ""
+        activityDate: timeStamp || '',
       },
       prefill: {
         email: this.state.email,
-        contact: this.state.contact + ""
+        contact: this.state.contact + '',
       },
-      theme: { color: Color.themeColor }
+      theme: {color: Color.themeColor},
     };
     RazorpayCheckout.open(options)
-      .then(data => {
+      .then((data) => {
         // handle success
         this.loadingManipulate(true);
         this.paymentSuccess(
@@ -2620,14 +2608,14 @@ class Home extends Component {
             ? data.razorpay_payment_id
             : data.details.razorpay_payment_id,
           item.billId,
-          order_id
+          order_id,
         );
         this.paymentCheck(1, 0, item.amount, item.labId, item.labName);
         // alert(`Success: ${data.details.razorpay_payment_id}`);
       })
-      .catch(error => {
+      .catch((error) => {
         // handle failure
-        console.log("OPTIONS", options);
+        console.log('OPTIONS', options);
         this.paymentCheck(0, 1, item.amount, item.labId, item.labName);
         alert(`Error: ${error.code} | ${error.description}`);
       });
@@ -2635,20 +2623,20 @@ class Home extends Component {
 
   getOrderId() {
     UserDefaults.get(stringsUserDefaults.userToken)
-      .then(token => {
+      .then((token) => {
         let params =
-          "token=" +
-          (token || "") +
-          "&isReport=" +
+          'token=' +
+          (token || '') +
+          '&isReport=' +
           1 +
-          "&amount=" +
+          '&amount=' +
           (this.state.razorpay_item.amount || 0) +
-          "&billId=" +
-          (this.state.razorpay_item.billId || "");
+          '&billId=' +
+          (this.state.razorpay_item.billId || '');
 
         var _this = this;
-        NetworkRequest(_this, "POST", URLs.createNewOrder, params)
-          .then(result => {
+        NetworkRequest(_this, 'POST', URLs.createNewOrder, params)
+          .then((result) => {
             if (result.success) {
               if ((result.response.code || 0) === 200) {
                 this.loadingManipulate(false);
@@ -2664,12 +2652,12 @@ class Home extends Component {
               this.paymentCheck(0, 1);
             }
           })
-          .catch(error => {
+          .catch((error) => {
             this.loadingManipulate(false);
             console.error(error);
           });
       })
-      .catch(error => {
+      .catch((error) => {
         this.loadingManipulate(false);
         console.error(error);
       });
@@ -2677,36 +2665,37 @@ class Home extends Component {
 
   render() {
     // const { props: { name, index, list } } = this;
+    const {lab={}}=this.state
     var pendingReports = [];
     pendingReports = this.state.pendingReports;
     var labName = this.state.unreadLab;
 
     const anim = this.animatedValue.interpolate({
       inputRange: [0.5, 3],
-      outputRange: [-100, 400]
+      outputRange: [-100, 400],
     });
 
     count = this.state.demographyCount;
 
     switch (count) {
       case 1:
-        indicatorText = "Weekly";
+        indicatorText = 'Weekly';
         break;
 
       case 2:
-        indicatorText = "Sedentary";
+        indicatorText = 'Sedentary';
         break;
 
       case 3:
-        indicatorText = "Rarely";
+        indicatorText = 'Rarely';
         break;
 
       default:
-        indicatorText = "";
+        indicatorText = '';
     }
     return (
       <ScrollView
-        style={{ backgroundColor: "white", marginBottom: 15 }}
+        style={{backgroundColor: 'white', marginBottom: 15}}
         refreshControl={
           <RefreshControl
             refreshing={this.state.refreshing}
@@ -2714,43 +2703,40 @@ class Home extends Component {
           />
         }
         bounces={true}
-        style={{ flex: 1, backgroundColor: "white" }}
-      >
-        <StatusBar backgroundColor={"#000"} barStyle="default" />
+        style={{flex: 1, backgroundColor: 'white'}}>
+        <StatusBar backgroundColor={'#000'} barStyle="default" />
 
         {/* <Animated.View style = {{bottom:anim}}> */}
 
-        <View style={{ flex: 1, marginTop: Global.isIphoneX ? 10 : 0 }}>
+        <View style={{flex: 1, marginTop: Global.isIphoneX ? 10 : 0}}>
           <Text
             style={{
-              fontFamily: "Arial",
+              fontFamily: 'Arial',
               fontSize: 17,
               color: Color._54,
               paddingTop: 12,
               marginLeft: 19,
               marginRight: 19,
               marginTop: 20,
-              fontFamily: "Arial"
-            }}
-          >
+              fontFamily: 'Arial',
+            }}>
             {this.getGreetingTime(moment())}
           </Text>
 
           <Text
             style={{
-              fontFamily: "Arial",
+              fontFamily: 'Arial',
               fontSize: 28,
-              fontWeight: "800",
-              color: "black",
+              fontWeight: '800',
+              color: 'black',
               paddingBottom: 16,
               marginLeft: 19,
               marginRight: 19,
-              fontFamily: "Arial"
-            }}
-          >
+              fontFamily: 'Arial',
+            }}>
             {this.state.user.fullName}
           </Text>
-          <Animated.View style={{ bottom: anim, flex: 1 }}>
+          <Animated.View style={{bottom: anim, flex: 1}}>
             {this.state.upcomingAppointments.length > 0
               ? (text = (
                   <Upcoming
@@ -2759,33 +2745,33 @@ class Home extends Component {
                     labNameText={
                       this.state.upcomingAppointments[0].labForId
                         ? this.state.upcomingAppointments[0].labForId.labName
-                        : ""
+                        : ''
                     }
                     date={moment
                       .utc(
-                        this.state.upcomingAppointments[0].userAppointmentDate
+                        this.state.upcomingAppointments[0].userAppointmentDate,
                       )
                       .local()
-                      .format("dddd")}
+                      .format('dddd')}
                     timing={moment
                       .utc(
-                        this.state.upcomingAppointments[0].userAppointmentDate
+                        this.state.upcomingAppointments[0].userAppointmentDate,
                       )
                       .local()
-                      .format("Do MMMM YYYY")}
+                      .format('Do MMMM YYYY')}
                     callBtn={
-                      this.state.upcomingAppointments[0].labForId ? "CALL" : ""
+                      this.state.upcomingAppointments[0].labForId ? 'CALL' : ''
                     }
                     directionsBtn={
                       this.state.upcomingAppointments[0].labForId
-                        ? "DIRECTIONS"
-                        : ""
+                        ? 'DIRECTIONS'
+                        : ''
                     }
                     labNull={
-                      this.state.upcomingAppointments[0].labForId ? "yes" : null
+                      this.state.upcomingAppointments[0].labForId ? 'yes' : null
                     }
                     descText={
-                      "Your order request has been received, We will update you here for further details."
+                      'Your order request has been received, We will update you here for further details.'
                     }
                     //descText={'Your order request for '+ moment.utc(this.state.upcomingAppointments[0].userAppointmentDate).local().format('dddd Do MMMM') +' has been received. We will update you here for further details.'}
                     onPressAction={() => {
@@ -2796,10 +2782,10 @@ class Home extends Component {
                     onPressCall={() => {
                       var number = this.state.upcomingAppointments[0].labForId
                         ? this.state.upcomingAppointments[0].labForId.labContact
-                        : "";
-                      var numArray = number.split(",");
+                        : '';
+                      var numArray = number.split(',');
 
-                      Linking.openURL("tel:" + numArray[0]);
+                      Linking.openURL('tel:' + numArray[0]);
                     }}
                     onPressDirection={this.OnDirectionPressed}
                   />
@@ -2810,8 +2796,8 @@ class Home extends Component {
               <Upcoming
                 typeText={
                   this.state.upcomingHomeCollection[0].collectingPersonId
-                    ? "HOME COLLECTION BY"
-                    : "HOME COLLECTION"
+                    ? 'HOME COLLECTION BY'
+                    : 'HOME COLLECTION'
                 }
                 nameText={
                   this.state.upcomingHomeCollection[0].collectingPersonId
@@ -2822,36 +2808,36 @@ class Home extends Component {
                 labNameText={
                   this.state.upcomingHomeCollection[0].labForId
                     ? this.state.upcomingHomeCollection[0].labForId.labName
-                    : ""
+                    : ''
                 }
                 date={moment
                   .utc(this.state.upcomingHomeCollection[0].startTime)
                   .local()
-                  .format("dddd")}
+                  .format('dddd')}
                 timing={moment
                   .utc(this.state.upcomingHomeCollection[0].startTime)
                   .local()
-                  .format("h:mm a")}
+                  .format('h:mm a')}
                 timingTo={
-                  "- " +
+                  '- ' +
                   moment
                     .utc(this.state.upcomingHomeCollection[0].endTime)
                     .local()
-                    .format("h:mm a")
+                    .format('h:mm a')
                 }
                 labNull={
-                  this.state.upcomingHomeCollection[0].labForId ? "yes" : null
+                  this.state.upcomingHomeCollection[0].labForId ? 'yes' : null
                 }
                 //  descText={'Your order request for '+ moment.utc(this.state.upcomingHomeCollection[0].startTime).local().format('dddd Do MMMM') +' has been received. We will update you here for further details.'}
                 descText={
-                  "Your order request has been received, We will update you here for further details."
+                  'Your order request has been received, We will update you here for further details.'
                 }
-                directionsBtn={"VIEW ORDER"}
+                directionsBtn={'VIEW ORDER'}
                 callBtn={
                   this.state.upcomingHomeCollection[0].labForId
                     ? this.state.upcomingHomeCollection[0].labForId.labContact
-                      ? "CALL"
-                      : ""
+                      ? 'CALL'
+                      : ''
                     : null
                 }
                 onPressAction={() => {
@@ -2864,23 +2850,23 @@ class Home extends Component {
                     ? this.state.upcomingHomeCollection[0].collectingPersonId
                         .mobile
                     : this.state.upcomingHomeCollection[0].labForId.labContact;
-                  var numArray = number.split(",");
-                  Linking.openURL("tel:" + numArray[0]);
+                  var numArray = number.split(',');
+                  Linking.openURL('tel:' + numArray[0]);
                 }}
               />
             ) : null}
             {!this.state.isInitialLoading ? (
-              <View style={{ flex: 1, backgroundColor: "white" }}>
+              <View style={{flex: 1, backgroundColor: 'white'}}>
                 {this.state.isUnreadReportFlag ? (
                   <DummyCard
                     headerText="Your Reports"
                     // subheaderText= 'You have unread reports from '+ {labName} + ' click to view them'
                     subheaderText={
                       labName
-                        ? "You have unread reports from " +
+                        ? 'You have unread reports from ' +
                           labName +
-                          " click to view them"
-                        : "You have unread reports click to view them"
+                          ' click to view them'
+                        : 'You have unread reports click to view them'
                     }
                     image={Images.imageCardio}
                     actualType="Unread Reports"
@@ -2889,13 +2875,12 @@ class Home extends Component {
                 ) : null}
 
                 {this.state.isPendingFlag ? (
-                  <View style={{ marginBottom: 16 }}>
+                  <View style={{marginBottom: 16}}>
                     <Text
                       style={[
                         CommonStyles.secondary_text_title,
-                        { paddingTop: 8 }
-                      ]}
-                    >
+                        {paddingTop: 8},
+                      ]}>
                       Your pending orders
                     </Text>
                     <Text style={CommonStyles.secondary_text_description}>
@@ -2916,63 +2901,54 @@ class Home extends Component {
                       {
                         marginTop: 8,
                         marginBottom: 8,
-                        backgroundColor: "white",
+                        backgroundColor: 'white',
                         paddingLeft: 16,
                         paddingRight: 16,
                         paddingTop: 16,
                         marginLeft: 17,
                         marginRight: 17,
                         elevation: 6,
-                        borderRadius: 6
+                        borderRadius: 6,
                       },
-                      CommonStyles.commonShadow
-                    ]}
-                  >
-                    <View
-                      style={{ flexDirection: "row", alignItems: "center" }}
-                    >
+                      CommonStyles.commonShadow,
+                    ]}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
                       <MaterialIcons
-                        name={"announcement"}
+                        name={'announcement'}
                         size={35}
                         style={{
-                          color: "#253F8B"
+                          color: '#253F8B',
                         }}
                       />
                       <Text
-                        style={[
-                          CommonStyles.common_header,
-                          { paddingLeft: 12 }
-                        ]}
-                      >
+                        style={[CommonStyles.common_header, {paddingLeft: 12}]}>
                         Your last visit
                       </Text>
                     </View>
                     <Text
                       style={{
-                        fontFamily: "Arial",
+                        fontFamily: 'Arial',
                         fontSize: 16,
                         paddingTop: 8,
-                        color: Color._4A
-                      }}
-                    >
-                      Share your feedback{" "}
-                      {this.state.labName ? "at " + this.state.labName : ""}
+                        color: Color._4A,
+                      }}>
+                      Share your feedback{' '}
+                      {this.state.labName ? 'at ' + this.state.labName : ''}
                     </Text>
                     <View
                       style={{
-                        alignItems: "center",
-                        justifyContent: "center",
-                        margin: 16
-                      }}
-                    >
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: 16,
+                      }}>
                       <StarRatingBar
-                        emptyStar={"star-border"}
-                        fullStar={"star"}
+                        emptyStar={'star-border'}
+                        fullStar={'star'}
                         maxStars={5}
                         rating={this.state.rating}
-                        selectedStar={rating => {
+                        selectedStar={(rating) => {
                           this.setState({
-                            rating: rating
+                            rating: rating,
                           });
                         }}
                         starColor={Color.starYellow}
@@ -2989,17 +2965,15 @@ class Home extends Component {
                           reportViewModal: false,
                           trackerModal: false,
                           upcomingOrderModal: false,
-                          insuranceModal: false
+                          insuranceModal: false,
                         });
                       }}
-                      style={{ padding: 12 }}
-                    >
+                      style={{padding: 12}}>
                       <Text
                         style={[
                           CommonStyles.button_style,
-                          { textAlign: "center" }
-                        ]}
-                      >
+                          {textAlign: 'center'},
+                        ]}>
                         SUBMIT
                       </Text>
                     </Ripple>
@@ -3015,11 +2989,12 @@ class Home extends Component {
                 />
 
                 {this.state.isShowBooking ? (
-                  <DummyCard
-                    headerText="Book Sample Collection at Home"
-                    subheaderText=""
-                    image={Images.appointIcon}
+                  <CustomCardForEHeart
+                    headerText={`Call ${lab.labContact} to Book`}
+                    actualType="Click here to book through app"
+                    image={Images.imageLivehealthLogoGif}
                     onPressAction={this.requestLocationPermission}
+                    imageStyles={{height: 40, width: 50, flex: 0}}
                   />
                 ) : null}
                 {!this.props.demographics.demographics.show ? (
@@ -3037,20 +3012,20 @@ class Home extends Component {
                   <DummyCard
                     headerText="Review Phlebotomist"
                     subheaderText={
-                      "Review phlebotomist" +
+                      'Review phlebotomist' +
                       (this.state.phlebotomistName
-                        ? " " + this.state.phlebotomistName + " "
-                        : " ") +
-                      "for home collection done" +
+                        ? ' ' + this.state.phlebotomistName + ' '
+                        : ' ') +
+                      'for home collection done' +
                       (this.state.labNameHC
-                        ? " for " + this.state.labNameHC
-                        : "")
+                        ? ' for ' + this.state.labNameHC
+                        : '')
                     }
                     image={Images.blood_donation}
                     onPressAction={() => {
                       this.gotoFeedback(
                         this.state.collectingPersonId,
-                        this.state.homeCollectionId
+                        this.state.homeCollectionId,
                       );
                     }}
                   />
@@ -3080,34 +3055,30 @@ class Home extends Component {
           {this.state.showNotification ? (
             <Animated.View
               style={{
-                transform: [{ translateY: this.animatedValueNotification }],
+                transform: [{translateY: this.animatedValueNotification}],
                 height: 90,
-                backgroundColor: "#EEEEEE",
-                position: "absolute",
+                backgroundColor: '#EEEEEE',
+                position: 'absolute',
                 left: 0,
                 top: 0,
                 right: 0,
-                justifyContent: "center",
+                justifyContent: 'center',
                 borderWidth: 1.5,
-                borderColor: "#ccc",
-                elevation: 10
-              }}
-            >
+                borderColor: '#ccc',
+                elevation: 10,
+              }}>
               <Ripple onPress={this.onNotificationOpenedForeground}>
                 <Text
                   style={{
                     marginLeft: 18,
-                    color: "black",
+                    color: 'black',
                     fontSize: 14,
-                    fontWeight: "bold",
-                    paddingTop: 20
-                  }}
-                >
+                    fontWeight: 'bold',
+                    paddingTop: 20,
+                  }}>
                   {this.state.notificationHeader}
                 </Text>
-                <Text
-                  style={{ marginLeft: 18, paddingTop: 4, marginBottom: 5 }}
-                >
+                <Text style={{marginLeft: 18, paddingTop: 4, marginBottom: 5}}>
                   {this.state.notificationSubText}
                 </Text>
               </Ripple>
@@ -3125,21 +3096,20 @@ class Home extends Component {
            }}
            > */}
         <ModalBox
-          ref={"modal1"}
+          ref={'modal1'}
           swipeThreshold={200}
           swipeArea={!this.state.upcomingOrderModal ? Global.screenHeight : 300}
           isOpen={this.state.isOpen}
           swipeToClose={this.state.swipeToClose}
           onClosed={this.onClose}
-          position={"top"}
+          position={'top'}
           coverScreen={true}
           keyboardTopOffset={Global.iOSPlatform ? 22 : 0}
           onOpened={this.onOpen}
           setSwipe={this.setSwipe}
           getSwipe={this.getSwipe}
           isScrollable={this.state.isScrollable}
-          onClosingState={this.onClosingState}
-        >
+          onClosingState={this.onClosingState}>
           {this.state.insuranceModal ? (
             <InsuranceModal
               setSwipe={this.setSwipe}
@@ -3229,26 +3199,31 @@ class Home extends Component {
 function mapDispatchToActions(dispatch) {
   return {
     getList: () => dispatch(getList()),
-    setList: list => dispatch(setList(list)),
+    setList: (list) => dispatch(setList(list)),
     onClickInc: () => {
       dispatch(incrementAC());
     },
     onClickDec: () => {
       dispatch(decrementAC());
     },
-    setUnreadFlag: num => dispatch(setUnreadFlag(num)),
-    setDemographics: arr => dispatch(setDemographics(arr)),
-    setCurrency: str => dispatch(setCurrency(str))
+    setUnreadFlag: (num) => dispatch(setUnreadFlag(num)),
+    setDemographics: (arr) => dispatch(setDemographics(arr)),
+    setCurrency: (str) => dispatch(setCurrency(str)),
   };
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => {
+  
+  return({
   pinnedTrackers: state.pinnedTrackers,
   noti: state.notification,
   unread: state.unread,
   demographics: state.demographics,
-  currency: state.currency
-});
+  currency: state.currency,
+  lab:state.rawData.lab
+})
+
+};
 
 // for app font to not get overridden by system font
 Text.allowFontScaling = false;
@@ -3256,7 +3231,4 @@ Text.allowFontScaling = false;
 //To disable app yellow warnings
 // console.disableYellowBox = "false";
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToActions
-)(Home);
+export default connect(mapStateToProps, mapDispatchToActions)(Home);

@@ -49,6 +49,7 @@ export default class DummyCard extends Component {
   render(){
     var imageUrl = this.state.image
     var image = Image.imageUrl
+    const {imageStyles={height:35,width:35,flex:0}}=this.props
     return(
         <Animated.View style={[{transform:[{scale: this.state.springVal}]},styles.container , CommonStyles.commonShadow, this.props.styles]}>
           <Ripple
@@ -62,7 +63,7 @@ export default class DummyCard extends Component {
             }}>
             <View style={{paddingLeft: 17, paddingRight: 17, paddingTop: 17}}>
               <View style={styles.innerContainer}>
-                <Image source={imageUrl} style={{height:35,width:35,flex:0}}/>
+                <Image source={imageUrl} style={imageStyles}/>
                 {(this.state.headerText) ? (<Text style={[CommonStyles.common_header, {paddingLeft: 16}]}>{this.state.headerText}</Text>) : (null)}
               </View>
               {this.state.subheaderText ? <Text style={{ fontFamily: 'Arial' ,color: Color._54, fontSize: 16,paddingTop: 4}}>{this.state.subheaderText}</Text> :null}
