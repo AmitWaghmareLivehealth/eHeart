@@ -2988,9 +2988,9 @@ class Home extends Component {
                   goAction={this.gotoTrackerNav}
                 />
 
-                {this.state.isShowBooking ? (
+                {this.state.isShowBooking  ? (
                   <CustomCardForEHeart
-                    headerText={`Call ${lab.labContact} to Book`}
+                    headerText={ !lab.labContact ? 'Book Home Collection' :`Call ${lab.labContact} to Book`}
                     actualType="Click here to book through app"
                     image={Images.imageLivehealthLogoGif}
                     onPressAction={this.requestLocationPermission}
