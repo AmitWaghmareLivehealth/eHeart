@@ -3220,8 +3220,7 @@ const mapStateToProps = (state) => {
   unread: state.unread,
   demographics: state.demographics,
   currency: state.currency,
-  lab:state.rawData.lab
-})
+ })
 
 };
 
