@@ -2993,6 +2993,8 @@ class Home extends Component {
                     headerText={ !lab.labContact ? 'Book Home Collection ' :`Call ${lab.labContact} to Book`}
                     actualType="Click here to book through app"
                     image={Images.imageLivehealthLogoGif}
+                    phoneIcon={Images.phoneCallIcon}
+                    labContact={lab.labContact}
                     onPressAction={this.requestLocationPermission}
                     imageStyles={{height: 40, width: 50, flex: 0}}
                   />

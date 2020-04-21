@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, Image, StyleSheet, Animated} from 'react-native';
+import {View, Text, Image, StyleSheet, Animated, Linking} from 'react-native';
 import {Images, Color, CommonStyles} from '../../../utils';
 import {Ripple} from '../../components';
 
@@ -17,7 +17,7 @@ export default class CustomCardForEHeart extends Component {
       animated: this.props.animated,
     };
   }
-
+  preventDefault = true;
   spring1() {
     this.springValue.setValue(0.99);
     //this.setState({springVal:0.97})
@@ -39,7 +39,11 @@ export default class CustomCardForEHeart extends Component {
   render() {
     var imageUrl = this.state.image;
     var image = Image.imageUrl;
-    const {imageStyles = {height: 35, width: 35, flex: 0}} = this.props;
+    const {
+      imageStyles = {height: 35, width: 35, flex: 0},
+      labContact,
+      phoneIcon,
+    } = this.props;
     return (
       <Animated.View
         style={[
@@ -48,39 +52,59 @@ export default class CustomCardForEHeart extends Component {
           CommonStyles.commonShadow,
           this.props.styles,
         ]}>
-        <Ripple
-          rippleOpacity={0.2}
-          onPressIn={this.spring1.bind(this)}
-          onPressOut={this.spring2.bind(this)}
-          onPress={() => {
-            if (this.state.onPressAction) {
-              this.state.onPressAction();
-            }
-          }}>
-          <View style={{padding:10}}>
-            <View>
-              <View style={{display:'flex',flexDirection:'row'}}>
-                <Image source={imageUrl} style={imageStyles} />
-                <View style={{marginLeft:10}}>
-                  <Text style={{fontSize:19,fontWeight:'bold'}}>{this.state.headerText}</Text>
-                  <Text style={{fontSize:19,fontWeight:'bold'}}>eHeart DoorStep Diagnosis</Text>
+        <View style={{display: 'flex', flexDirection: 'row'}}>
+          <Ripple
+            rippleOpacity={0.2}
+            onPressIn={this.spring1.bind(this)}
+            onPressOut={this.spring2.bind(this)}
+            onPress={() => {
+              if (this.state.onPressAction) {
+                this.state.onPressAction();
+              }
+            }}>
+            <View style={{marginTop: 20, marginLeft: 10, marginRight: 10}}>
+              <View>
+                <View style={{display: 'flex', flexDirection: 'row'}}>
+                  <Image source={imageUrl} style={imageStyles} />
+                  <View style={{marginLeft: 10}}>
+                    <Text style={{fontSize: 19, fontWeight: 'bold'}}>
+                      {this.state.headerText}
+                    </Text>
+                    <Text style={{fontSize: 19, fontWeight: 'bold'}}>
+                      eHeart DoorStep Diagnosis
+                    </Text>
+                  </View>
                 </View>
               </View>
+
+              <Text
+                style={{
+                  fontFamily: 'Arial',
+                  color: Color._A3,
+                  fontSize: 13,
+                  fontWeight: '400',
+                  marginTop: 10,
+                  paddingBottom: this.state.actualType ? 17 : 12,
+                }}>
+                {this.state.actualType}
+              </Text>
             </View>
-         
-             
-            <Text
-              style={{
-                fontFamily: 'Arial',
-                color: Color._A3,
-                fontSize: 13,
-                fontWeight: '400',
-                paddingBottom: this.state.actualType ? 17 : 12,
+          </Ripple>
+          <View
+            style={{
+              borderLeftWidth: 2,
+              borderLeftColor: '#d1d5da',
+            }}
+          />
+          {labContact && (
+            <Ripple
+              onPress={() => {
+                Linking.openURL(`tel:${labContact}`);
               }}>
-              {this.state.actualType}
-            </Text>
-          </View>
-        </Ripple>
+              <Image source={phoneIcon} style={{marginTop: '55%'}} />
+            </Ripple>
+          )}
+        </View>
       </Animated.View>
     );
   }

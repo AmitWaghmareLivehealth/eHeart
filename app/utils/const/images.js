@@ -1,3 +1,4 @@
+export const phoneCallIcon=require("../../assets/common/phone.png");
 export const imageLivehealthLogoGif = require("../../assets/common/logo_gif.gif");
 
 export const imageLivehealthLogo = require("../../assets/common/LiveHealth_SplashTag.png");
